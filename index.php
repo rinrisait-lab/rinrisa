@@ -1,4 +1,4 @@
-<?php echo 'Hello POS'; ?>
+
 <?php
 // Simple POS system placeholder
 $products = [
