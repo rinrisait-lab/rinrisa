@@ -1,6 +1,6 @@
 
 <?php
-// Simple POS system placeholder
+// POS system placeholder
 $products = [
     ['id'=>1, 'name'=>'Coffee', 'price'=>3.5],
     ['id'=>2, 'name'=>'Tea', 'price'=>2.5],
