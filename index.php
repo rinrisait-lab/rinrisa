@@ -17,9 +17,10 @@ if (!isset($_SESSION['cart'])) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'], $_POST['quantity'])) {
     $id = (int)$_POST['product_id'];
     $qty = max(1, (int)$_POST['quantity']);
+
     foreach ($products as $p) {
         if ($p['id'] == $id) {
-            // check if product already in cart
+            // Check if product already in cart
             $found = false;
             foreach ($_SESSION['cart'] as &$item) {
                 if ($item['id'] == $id) {
@@ -47,6 +48,7 @@ if (isset($_POST['clear_cart'])) {
     $_SESSION['cart'] = [];
 }
 
+// Assign cart
 $cart = $_SESSION['cart'];
 ?>
 <!DOCTYPE html>
@@ -57,6 +59,7 @@ $cart = $_SESSION['cart'];
 <body>
 <h1>POS System</h1>
 
+<!-- Add product form -->
 <form method="post">
     <label>Select Product:</label>
     <select name="product_id">
