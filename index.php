@@ -6,6 +6,7 @@ $products = [
     ['id'=>2, 'name'=>'Tea', 'price'=>2.5],
     ['id'=>3, 'name'=>'Cake', 'price'=>4.0],
      ['id'=>4, 'name'=>'Cocoun', 'price'=>1.0],
+    ['id'=>4, 'name'=>'Coka', 'price'=>0.50],
 ];
 
 $total = 0;
