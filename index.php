@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
     <title>System POS</title>
 </head>
 <body>
-<h1>POS Mr.RISA</h1>
+<h1>POS System</h1>
 <form method="post">
     <label>Select Product:</label>
     <select name="product_id">
