@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple POS</title>
+    <title>System POS</title>
 </head>
 <body>
 <h1>POS Mr.RISA</h1>
