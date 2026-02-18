@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
 <body>
 <h1>POS System</h1>
 <form method="post">
-    <label>:</label>
+    <label>Select Product:</label>
     <select name="product_id">
         <?php foreach($products as $p): ?>
         <option value="<?= $p['id'] ?>"><?= $p['name'] ?> ($<?= $p['price'] ?>)</option>
