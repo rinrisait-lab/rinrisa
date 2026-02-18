@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
 </form>
 
 <?php if (isset($selected)): ?>
-<p>Selected Product: <strong><?= $selected ?></strong></p>
+<p>: <strong><?= $selected ?></strong></p>
 <p>Total Price: <strong>$<?= $total ?></strong></p>
 <?php endif; ?>
 </body>
