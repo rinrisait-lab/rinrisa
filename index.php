@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
         <option value="<?= $p['id'] ?>"><?= $p['name'] ?> ($<?= $p['price'] ?>)</option>
         <?php endforeach; ?>
     </select>
-    <button type="submit">Calculate</button>
+    <button type="submit">OK</button>
 </form>
 
 <?php if (isset($selected)): ?>
