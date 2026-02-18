@@ -1,21 +1,23 @@
-
 <?php
 // POS system placeholder
 $products = [
-    ['id'=>1, 'name'=>'Coffee', 'price'=>3.5],
-    ['id'=>2, 'name'=>'Tea', 'price'=>2.5],
-    ['id'=>3, 'name'=>'Cake', 'price'=>4.0],
-     ['id'=>4, 'name'=>'Cocoun', 'price'=>1.0],
-    ['id'=>4, 'name'=>'Coka', 'price'=>0.50],
+    ['id'=>1, 'name'=>'Tea', 'price'=>2.50],
+    ['id'=>2, 'name'=>'Coffee', 'price'=>3.50],
+    ['id'=>3, 'name'=>'Coka', 'price'=>0.50],
 ];
 
-$total = 0;
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
+$cart = [];
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'], $_POST['quantity'])) {
     $id = (int)$_POST['product_id'];
+    $qty = max(1, (int)$_POST['quantity']); // បញ្ជាក់ចំនួន ≥1
     foreach ($products as $p) {
         if ($p['id'] == $id) {
-            $total = $p['price'];
-            $selected = $p['name'];
+            $cart[] = [
+                'name' => $p['name'],
+                'price' => $p['price'],
+                'qty' => $qty,
+                'total' => $p['price'] * $qty
+            ];
         }
     }
 }
@@ -23,23 +25,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>System POS</title>
+    <title>POS System</title>
 </head>
 <body>
 <h1>POS System</h1>
 <form method="post">
     <label>Select Product:</label>
-    <Select name="product_id">
+    <select name="product_id">
         <?php foreach($products as $p): ?>
-        <option value="<?= $p['id'] ?>"><?= $p['name'] ?> ($<?= $p['price'] ?>)</option>
+        <option value="<?= $p['id'] ?>"><?= $p['name'] ?> ($<?= number_format($p['price'],2) ?>)</option>
         <?php endforeach; ?>
     </select>
-    <button type="submit">OK</button>
+    <label>Quantity:</label>
+    <input type="number" name="quantity" value="1" min="1">
+    <button type="submit">Add</button>
 </form>
 
-<?php if (isset($selected)): ?>
-<p>: <strong><?= $selected ?></strong></p>
-<p>Total Price: <strong>$<?= $total ?></strong></p>
+<?php if($cart): ?>
+<h2>Receipt</h2>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>#</th>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Total</th>
+    </tr>
+    <?php 
+    $grandTotal = 0;
+    foreach($cart as $i => $item): 
+        $grandTotal += $item['total'];
+    ?>
+    <tr>
+        <td><?= $i+1 ?></td>
+        <td><?= $item['name'] ?></td>
+        <td>$<?= number_format($item['price'],2) ?></td>
+        <td><?= $item['qty'] ?></td>
+        <td>$<?= number_format($item['total'],2) ?></td>
+    </tr>
+    <?php endforeach; ?>
+    <tr>
+        <td colspan="4"><strong>Grand Total</strong></td>
+        <td><strong>$<?= number_format($grandTotal,2) ?></strong></td>
+    </tr>
+</table>
 <?php endif; ?>
 </body>
 </html>
