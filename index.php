@@ -144,7 +144,7 @@ $cart = $_SESSION['cart'];
         </tr>
     </table>
     <br>
-    <button type="submit" name="clear_cart">Clear Cart</button>
+    <button type="submit" name="clear_cart">Clear</button>
 </form>
 <?php endif; ?>
 
