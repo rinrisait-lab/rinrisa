@@ -6,11 +6,12 @@
     }
 
     #receipt {
-        display: inline-block; /* inline block for centering */
-        text-align: left;      /* content align left */
+        display: inline-block; /* horizontal center */
+        text-align: left;      /* content left align */
         width: 80mm;
         font-size: 12pt;
         border-collapse: collapse;
+        margin-top: 0; /* always start from top */
     }
 
     #receipt table {
@@ -25,11 +26,11 @@
     }
 
     body *:not(#receipt) {
-        display: none; /* hide everything else */
+        display: none;
     }
 
     @page {
         size: 80mm auto;
-        margin: 0; /* browser may still add small margins */
+        margin: 0; /* most browsers still add tiny default margin */
     }
 }
