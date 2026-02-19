@@ -1,24 +1,25 @@
+/* ===== General Styles ===== */
 body {
-    font-family: Arial, sans-serif;
+    font-family: monospace;
     background: #f5f5f5;
     padding: 20px;
-    text-align: center; /* center horizontally */
+    text-align: center; /* horizontal center for receipt */
 }
 
 #receipt {
-    display: inline-block;  /* center horizontally */
-    text-align: left;       /* table content align left */
-    width: 80mm;            /* receipt printer width */
-    font-size: 12pt;
+    width: 80mm;                /* receipt printer width */
+    margin: 20mm auto 0 auto;   /* top spacing + center horizontally */
     background: #fff;
     padding: 10px;
-    margin-top: 20mm;       /* spacing from top for print */
-    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    text-align: left;
+    font-size: 12pt;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
 
 #receipt h2 {
     text-align: center;
-    margin: 0 0 10px 0;
+    margin-bottom: 10px;
 }
 
 #receipt table {
@@ -27,18 +28,18 @@ body {
 }
 
 #receipt th, #receipt td {
-    border: 1px solid #000;
-    padding: 5px;
-    text-align: left;
+    border-bottom: 1px solid #000;
+    padding: 4px 0;
 }
 
 #receipt tfoot td {
     font-weight: bold;
+    border-top: 2px solid #000;
 }
 
 button {
     margin-top: 20px;
-    padding: 10px 20px;
+    padding: 8px 20px;
     font-size: 14px;
     cursor: pointer;
 }
@@ -52,10 +53,7 @@ button {
         visibility: visible;
     }
     #receipt {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        margin-top: 20mm; /* spacing from top */
+        margin: 20mm auto 0 auto;
         box-shadow: none;
     }
     @page {
