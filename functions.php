@@ -5,7 +5,7 @@ session_start();
 // Hardcoded users (login system)
 $users = [
     'NSM'     => password_hash('NSM@admin', PASSWORD_DEFAULT),
-    'cashier' => password_hash('abcd', PASSWORD_DEFAULT)
+    'cashier' => password_hash('admin@123', PASSWORD_DEFAULT)
 ];
 
 // ---------------------
