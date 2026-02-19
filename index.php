@@ -2,9 +2,7 @@
 session_start();
 require 'functions.php';
 
-// =====================
 // LOGIN CHECK
-// =====================
 if (!isLoggedIn()) {
     $error = '';
     if (isset($_POST['login'])) {
@@ -24,17 +22,11 @@ if (!isLoggedIn()) {
         <button type="submit" name="login">Login</button>
     </form>
     <?php
-    exit; // stop execution until logged in
+    exit;
 }
 
-// =====================
-// LOGGED-IN USER
-// =====================
 echo '<p>Logged in as: ' . htmlspecialchars($_SESSION['user']) . ' | <a href="logout.php">Logout</a></p>';
 
-// =====================
-// PRODUCTS
-// =====================
 $products = [
     ['id'=>1, 'name'=>'Tea', 'price'=>2.50],
     ['id'=>2, 'name'=>'Coffee', 'price'=>3.50],
@@ -43,16 +35,10 @@ $products = [
     ['id'=>5, 'name'=>'Cake', 'price'=>6.50],
 ];
 
-// =====================
-// INITIALIZE CART
-// =====================
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
-// =====================
-// HANDLE ADD TO CART
-// =====================
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST['product_id'], $_POST['quantity'])) {
@@ -83,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    // CLEAR CART
     if (isset($_POST['clear_cart'])) {
         $_SESSION['cart'] = [];
     }
@@ -96,27 +81,49 @@ $cart = $_SESSION['cart'];
 <html>
 <head>
     <title>POS System</title>
+
+    <style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        #receipt, #receipt * {
+            visibility: visible;
+        }
+        #receipt {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 80mm;
+        }
+    }
+    </style>
+
 </head>
 <body>
+
 <h1>POS System BUTHMAIYA</h1>
 
-<!-- ADD PRODUCT FORM -->
 <form method="post">
     <label>Select Product:</label>
     <select name="product_id">
         <?php foreach($products as $p): ?>
-        <option value="<?= $p['id'] ?>"><?= $p['name'] ?> ($<?= number_format($p['price'],2) ?>)</option>
+        <option value="<?= $p['id'] ?>">
+            <?= $p['name'] ?> ($<?= number_format($p['price'],2) ?>)
+        </option>
         <?php endforeach; ?>
     </select>
+
     <label>Quantity:</label>
     <input type="number" name="quantity" value="1" min="1">
+
     <button type="submit">OK</button>
 </form>
 
-<!-- CART TABLE -->
 <?php if($cart): ?>
 <h2>Receipt</h2>
-<form method="post">
+
+<div id="receipt">
     <table border="1" cellpadding="5">
         <tr>
             <th>#</th>
@@ -125,6 +132,7 @@ $cart = $_SESSION['cart'];
             <th>Qty</th>
             <th>Total</th>
         </tr>
+
         <?php 
         $grandTotal = 0;
         foreach($cart as $i => $item):
@@ -138,15 +146,14 @@ $cart = $_SESSION['cart'];
             <td>$<?= number_format($item['total'],2) ?></td>
         </tr>
         <?php endforeach; ?>
+
         <tr>
             <td colspan="4"><strong>Grand Total</strong></td>
             <td><strong>$<?= number_format($grandTotal,2) ?></strong></td>
         </tr>
     </table>
-    <br>
-    <button type="submit" name="clear_cart">Clear</button>
-</form>
-<?php endif; ?>
+</div>
 
-</body>
-</html>
+<br>
+
+<button t
