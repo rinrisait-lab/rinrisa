@@ -70,7 +70,7 @@ $cart = $_SESSION['cart'];
     </select>
     <label>Quantity:</label>
     <input type="number" name="quantity" value="1" min="1">
-    <button type="submit">Add</button>
+    <button type="submit">OK</button>
 </form>
 
 <?php if($cart): ?>
