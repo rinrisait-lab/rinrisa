@@ -25,8 +25,6 @@ if (!isLoggedIn()) {
     exit;
 }
 
-echo '<p>Logged in as: ' . htmlspecialchars($_SESSION['user']) . ' | <a href="logout.php">Logout</a></p>';
-
 $products = [
     ['id'=>1, 'name'=>'Tea', 'price'=>2.50],
     ['id'=>2, 'name'=>'Coffee', 'price'=>3.50],
@@ -35,15 +33,14 @@ $products = [
     ['id'=>5, 'name'=>'Cake', 'price'=>6.50],
 ];
 
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
-}
+if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
 
+// ================== PHP POST LOGIC ==================
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Add existing product
     if (isset($_POST['product_id'], $_POST['quantity'])) {
         $id = (int)$_POST['product_id'];
         $qty = max(1, (int)$_POST['quantity']);
-
         foreach ($products as $p) {
             if ($p['id'] == $id) {
                 $found = false;
@@ -57,16 +54,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
                 if (!$found) {
                     $_SESSION['cart'][] = [
-                        'id' => $p['id'],
-                        'name' => $p['name'],
-                        'price' => $p['price'],
-                        'qty' => $qty,
-                        'total' => $p['price'] * $qty
+                        'id'=>$p['id'],
+                        'name'=>$p['name'],
+                        'price'=>$p['price'],
+                        'qty'=>$qty,
+                        'total'=>$p['price'] * $qty
                     ];
                 }
             }
         }
     }
+
+    // Add new product (custom)
+    if (isset($_POST['add_new_product'])) {
+        $name = trim($_POST['new_name']);
+        $price = (float)$_POST['new_price'];
+        $qty = max(1,(int)$_POST['new_qty']);
+        $_SESSION['cart'][] = [
+            'id'=>time(), // unique id
+            'name'=>$name,
+            'price'=>$price,
+            'qty'=>$qty,
+            'total'=>$price*$qty
+        ];
+    }
+
+    // Clear cart
     if (isset($_POST['clear_cart'])) {
         $_SESSION['cart'] = [];
     }
@@ -84,24 +97,34 @@ $cart = $_SESSION['cart'];
 </head>
 <body>
 
-<h1>POS System BUTHMAIYA</h1>
+<p>Logged in as: <?= htmlspecialchars($_SESSION['user']) ?> | <a href="logout.php">Logout</a></p>
 
+<!-- ================= Existing Products Form ================= -->
+<h3>Select Product</h3>
 <form method="post">
-    <label>Select Product:</label>
     <select name="product_id">
         <?php foreach($products as $p): ?>
         <option value="<?= $p['id'] ?>"><?= $p['name'] ?> ($<?= number_format($p['price'],2) ?>)</option>
         <?php endforeach; ?>
     </select>
-    <label>Quantity:</label>
     <input type="number" name="quantity" value="1" min="1">
     <button type="submit">OK</button>
 </form>
 
+<!-- ================= Add New Product Form ================= -->
+<h3>Add New Product</h3>
+<form method="post">
+    <input type="text" name="new_name" placeholder="Product Name" required>
+    <input type="number" name="new_price" step="0.01" placeholder="Price" required>
+    <input type="number" name="new_qty" value="1" min="1">
+    <button type="submit" name="add_new_product">➕ Add Product</button>
+</form>
+
+<!-- ================= Cart / Receipt ================= -->
 <?php if($cart): ?>
 <h2>Receipt</h2>
 <div id="receipt">
-    <h2> BUTHMAIYA Mart  Receipt</h2>
+    <h2>BUTHMAIYA Mart Receipt</h2>
     <table>
         <thead>
             <tr>
@@ -114,7 +137,7 @@ $cart = $_SESSION['cart'];
         <tbody>
             <?php 
             $grandTotal = 0;
-            foreach($cart as $i => $item):
+            foreach($cart as $i=>$item):
                 $grandTotal += $item['total'];
             ?>
             <tr>
@@ -143,4 +166,3 @@ $cart = $_SESSION['cart'];
 
 </body>
 </html>
-
