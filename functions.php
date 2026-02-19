@@ -1,6 +1,8 @@
 <?php
-// Start session at the very top
-session_start();
+// Start session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Hardcoded users (login system)
 $users = [
@@ -28,12 +30,10 @@ function logout() {
     session_destroy();
 }
 
-
 // ---------------------
 // PRODUCTS (hardcoded or from DB)
 // ---------------------
 function getProducts() {
-    // Example: hardcoded products
     return [
         ['id'=>1, 'name'=>'Tea', 'sell_price'=>2.50],
         ['id'=>2, 'name'=>'Coffee', 'sell_price'=>3.50],
@@ -41,13 +41,6 @@ function getProducts() {
         ['id'=>4, 'name'=>'Cocoun', 'sell_price'=>1.50],
         ['id'=>5, 'name'=>'Cake', 'sell_price'=>6.50],
     ];
-
-    // If you have DB:
-    /*
-    global $pdo;
-    $stmt = $pdo->query("SELECT * FROM products");
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    */
 }
 
 // ---------------------
@@ -70,7 +63,7 @@ function getCartProducts() {
     $cartItems = [];
     if (!isset($_SESSION['cart'])) return $cartItems;
 
-    $products = getProducts(); // get all products
+    $products = getProducts();
     foreach ($_SESSION['cart'] as $pid => $qty) {
         foreach ($products as $p) {
             if ($p['id'] == $pid) {
@@ -84,4 +77,3 @@ function getCartProducts() {
     return $cartItems;
 }
 ?>
-
