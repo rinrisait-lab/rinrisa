@@ -2,11 +2,11 @@
     body {
         margin: 0;
         padding: 0;
-        text-align: center; /* horizontal center */
+        text-align: center; /* center horizontal */
     }
 
     #receipt {
-        display: inline-block; /* center inline element */
+        display: inline-block; /* inline block for centering */
         text-align: left;      /* content align left */
         width: 80mm;
         font-size: 12pt;
@@ -25,11 +25,11 @@
     }
 
     body *:not(#receipt) {
-        display: none;
+        display: none; /* hide everything else */
     }
 
     @page {
         size: 80mm auto;
-        margin: 0;
+        margin: 0; /* browser may still add small margins */
     }
 }
