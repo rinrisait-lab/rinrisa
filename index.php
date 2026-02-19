@@ -1,3 +1,4 @@
+
 <?php
 require 'functions.php';
 
@@ -6,7 +7,8 @@ if (!isLoggedIn()) {
     $error = '';
     if (isset($_POST['login'])) {
         if (login($_POST['username'], $_POST['password'])) {
-            header("Location: index.php"); exit;
+            header("Location: index.php");
+            exit;
         } else {
             $error = "Invalid username or password!";
         }
@@ -22,6 +24,12 @@ if (!isLoggedIn()) {
     <?php exit; // stop executing POS page until logged in ?>
 <?php
 }
+?>
+
+<!-- Logged-in user info -->
+<?php if(isLoggedIn()): ?>
+<p>Logged in as: <?= $_SESSION['user'] ?> | <a href="logout.php">Logout</a></p>
+<?php endif; ?>
 
 // Product list
 $products = [
@@ -29,7 +37,7 @@ $products = [
     ['id'=>2, 'name'=>'Coffee', 'price'=>3.50],
     ['id'=>3, 'name'=>'Coka', 'price'=>0.50],
     ['id'=>4, 'name'=>'Cocoun', 'price'=>1.50],
-    ['id'=>៥, 'name'=>'Cake', 'price'=>6.50],
+    ['id'=>5, 'name'=>'Cake', 'price'=>6.50],
 ];
 
 // Initialize cart in session
