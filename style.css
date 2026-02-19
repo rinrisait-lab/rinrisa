@@ -1,13 +1,81 @@
-@media print {
-    #receipt {
-        display: inline-block;
-        width: 80mm;
-        text-align: left;
-        margin-top: 20mm; /* បន្ថែមចន្លោះពីលើ */
+<!DOCTYPE html>
+<html>
+<head>
+    <title>POS Receipt</title>
+    <style>
+    /* សម្រាប់ print */
+    @media print {
+        body {
+            margin: 0;
+            padding: 0;
+            text-align: center; /* ចំកណ្តាល horizontally */
+        }
+
+        #receipt {
+            display: inline-block;       /* inline block ដើម្បីចំកណ្តាល */
+            text-align: left;            /* content align left */
+            width: 80mm;                 /* ទទឹង receipt */
+            font-size: 12pt;
+            margin-top: 20mm;            /* ចន្លោះពីលើ អាចកែបាន */
+        }
+
+        #receipt table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #receipt th, #receipt td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: left;
+        }
+
+        @page {
+            margin: 0;
+            size: 80mm auto;             /* ទទឹង printer 80mm */
+        }
+
+        body *:not(#receipt) {
+            display: none;               /* លាក់អ្វីៗក្រៅ receipt */
+        }
     }
-    body {
-        text-align: center;
-    }
-    @page { margin: 0; size: 80mm auto; }
-    body *:not(#receipt) { display: none; }
-}
+    </style>
+</head>
+<body>
+
+<h1>POS System BUTHMAIYA</h1>
+
+<div id="receipt">
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Tea</td>
+            <td>$2.50</td>
+            <td>2</td>
+            <td>$5.00</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Coffee</td>
+            <td>$3.50</td>
+            <td>1</td>
+            <td>$3.50</td>
+        </tr>
+        <tr>
+            <td colspan="4"><strong>Grand Total</strong></td>
+            <td><strong>$8.50</strong></td>
+        </tr>
+    </table>
+</div>
+
+<button onclick="window.print()">🖨 Print Receipt</button>
+
+</body>
+</html>
