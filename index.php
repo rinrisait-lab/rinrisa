@@ -1,5 +1,27 @@
 <?php
-session_start();
+require 'functions.php';
+
+// LOGIN CHECK
+if (!isLoggedIn()) {
+    $error = '';
+    if (isset($_POST['login'])) {
+        if (login($_POST['username'], $_POST['password'])) {
+            header("Location: index.php"); exit;
+        } else {
+            $error = "Invalid username or password!";
+        }
+    }
+    ?>
+    <h2>Login POS System</h2>
+    <?php if($error) echo "<p style='color:red;'>$error</p>"; ?>
+    <form method="post">
+        Username: <input type="text" name="username" required><br>
+        Password: <input type="password" name="password" required><br>
+        <button type="submit" name="login">Login</button>
+    </form>
+    <?php exit; // stop executing POS page until logged in ?>
+<?php
+}
 
 // Product list
 $products = [
