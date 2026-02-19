@@ -59,7 +59,7 @@ $cart = $_SESSION['cart'];
     <title>POS System</title>
 </head>
 <body>
-<h1>POS System Mr.RISA-IT</h1>
+<h1>POS System BUTHMAIYA</h1>
 
 <!-- Add product form -->
 <form method="post">
