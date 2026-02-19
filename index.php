@@ -25,6 +25,8 @@ if (!isLoggedIn()) {
     exit;
 }
 
+echo '<p>Logged in as: ' . htmlspecialchars($_SESSION['user']) . ' | <a href="logout.php">Logout</a></p>';
+
 $products = [
     ['id'=>1, 'name'=>'Tea', 'price'=>2.50],
     ['id'=>2, 'name'=>'Coffee', 'price'=>3.50],
@@ -38,7 +40,6 @@ if (!isset($_SESSION['cart'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     if (isset($_POST['product_id'], $_POST['quantity'])) {
         $id = (int)$_POST['product_id'];
         $qty = max(1, (int)$_POST['quantity']);
@@ -66,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     }
-
     if (isset($_POST['clear_cart'])) {
         $_SESSION['cart'] = [];
     }
@@ -83,8 +83,6 @@ $cart = $_SESSION['cart'];
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<p>Logged in as: <?= htmlspecialchars($_SESSION['user']) ?> | <a href="logout.php">Logout</a></p>
 
 <h1>POS System BUTHMAIYA</h1>
 
@@ -103,31 +101,41 @@ $cart = $_SESSION['cart'];
 <?php if($cart): ?>
 <h2>Receipt</h2>
 <div id="receipt">
+    <h2>POS Receipt</h2>
     <table>
-        <tr>
-            <th>#</th><th>Product</th><th>Price</th><th>Qty</th><th>Total</th>
-        </tr>
-        <?php 
-        $grandTotal = 0;
-        foreach($cart as $i => $item):
-            $grandTotal += $item['total'];
-        ?>
-        <tr>
-            <td><?= $i+1 ?></td>
-            <td><?= $item['name'] ?></td>
-            <td>$<?= number_format($item['price'],2) ?></td>
-            <td><?= $item['qty'] ?></td>
-            <td>$<?= number_format($item['total'],2) ?></td>
-        </tr>
-        <?php endforeach; ?>
-        <tr>
-            <td colspan="4"><strong>Grand Total</strong></td>
-            <td><strong>$<?= number_format($grandTotal,2) ?></strong></td>
-        </tr>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            $grandTotal = 0;
+            foreach($cart as $i => $item):
+                $grandTotal += $item['total'];
+            ?>
+            <tr>
+                <td><?= $i+1 ?></td>
+                <td><?= $item['name'] ?></td>
+                <td><?= $item['qty'] ?></td>
+                <td>$<?= number_format($item['total'],2) ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Grand Total</td>
+                <td>$<?= number_format($grandTotal,2) ?></td>
+            </tr>
+        </tfoot>
     </table>
 </div>
 
-<button type="button" onclick="window.print()">🖨 Print Receipt</button>
+<button onclick="window.print()">🖨 Print Receipt</button>
+
 <form method="post">
     <button type="submit" name="clear_cart">Clear</button>
 </form>
@@ -135,3 +143,4 @@ $cart = $_SESSION['cart'];
 
 </body>
 </html>
+
