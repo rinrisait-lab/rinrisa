@@ -25,8 +25,7 @@ if (!isLoggedIn()) {
     exit;
 }
 
-echo '<p>Logged in as: ' . htmlspecialchars($_SESSION['user']) . ' | <a href="logout.php">Logout</a></p>';
-
+// Products
 $products = [
     ['id'=>1, 'name'=>'Tea', 'price'=>2.50],
     ['id'=>2, 'name'=>'Coffee', 'price'=>3.50],
@@ -39,6 +38,7 @@ if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
+// Add Product Logic
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['product_id'], $_POST['quantity'])) {
         $id = (int)$_POST['product_id'];
@@ -57,11 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
                 if (!$found) {
                     $_SESSION['cart'][] = [
-                        'id' => $p['id'],
-                        'name' => $p['name'],
-                        'price' => $p['price'],
-                        'qty' => $qty,
-                        'total' => $p['price'] * $qty
+                        'id'=>$p['id'],
+                        'name'=>$p['name'],
+                        'price'=>$p['price'],
+                        'qty'=>$qty,
+                        'total'=>$p['price']*$qty
                     ];
                 }
             }
@@ -76,7 +76,7 @@ $cart = $_SESSION['cart'];
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>POS System BUTHMAIYA</title>
@@ -84,24 +84,25 @@ $cart = $_SESSION['cart'];
 </head>
 <body>
 
-<h1>POS System BUTHMAIYA</h1>
+<p>Logged in as: <?= htmlspecialchars($_SESSION['user']) ?> | <a href="logout.php">Logout</a></p>
 
-<form method="post">
+<!-- ===== Add Product Form ===== -->
+<form method="post" class="product-form">
     <label>Select Product:</label>
     <select name="product_id">
         <?php foreach($products as $p): ?>
-        <option value="<?= $p['id'] ?>"><?= $p['name'] ?> ($<?= number_format($p['price'],2) ?>)</option>
+            <option value="<?= $p['id'] ?>"><?= $p['name'] ?> ($<?= number_format($p['price'],2) ?>)</option>
         <?php endforeach; ?>
     </select>
     <label>Quantity:</label>
     <input type="number" name="quantity" value="1" min="1">
-    <button type="submit">OK</button>
+    <button type="submit" name="add_product">➕ Add Product</button>
 </form>
 
+<!-- ===== Receipt ===== -->
 <?php if($cart): ?>
-<h2>Receipt</h2>
 <div id="receipt">
-    <h2> BUTHMAIYA Mart  Receipt</h2>
+    <h2>BUTHMAIYA Mart Receipt</h2>
     <table>
         <thead>
             <tr>
@@ -137,10 +138,9 @@ $cart = $_SESSION['cart'];
 <button onclick="window.print()">🖨 Print Receipt</button>
 
 <form method="post">
-    <button type="submit" name="clear_cart">Clear</button>
+    <button type="submit" name="clear_cart">Clear Cart</button>
 </form>
 <?php endif; ?>
 
 </body>
 </html>
-
