@@ -1,36 +1,9 @@
-@media print {
-    body {
-        margin: 0;
-        padding: 0;
-        text-align: center; /* center horizontal */
-    }
-
-    #receipt {
-        display: inline-block; /* horizontal center */
-        text-align: left;      /* content left align */
-        width: 80mm;
-        font-size: 12pt;
-        border-collapse: collapse;
-        margin-top: 0; /* always start from top */
-    }
-
-    #receipt table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    #receipt th, #receipt td {
-        border: 1px solid #000;
-        padding: 5px;
-        text-align: left;
-    }
-
-    body *:not(#receipt) {
-        display: none;
-    }
-
-    @page {
-        size: 80mm auto;
-        margin: 0; /* most browsers still add tiny default margin */
-    }
+#receipt {
+    display: inline-block;
+    text-align: left;
+    width: 80mm; 
 }
+body {
+    text-align: center; /* ចំកណ្តាល horizontally */
+}
+@page { margin: 0; size: 80mm auto; }
