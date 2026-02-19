@@ -153,7 +153,25 @@ $cart = $_SESSION['cart'];
         </tr>
     </table>
 </div>
-
 <br>
 
-<button t
+<button type="button" onclick="printReceipt()">🖨 Print Receipt</button>
+
+<form method="post">
+    <button type="submit" name="clear_cart">Clear</button>
+</form>
+
+<?php endif; ?>
+
+<script>
+function printReceipt() {
+    window.print();
+}
+</script>
+
+</body>
+</html>
+
+
+
+
