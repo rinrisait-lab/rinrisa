@@ -1,9 +1,13 @@
-#receipt {
-    display: inline-block;
-    text-align: left;
-    width: 80mm; 
+@media print {
+    #receipt {
+        display: inline-block;
+        width: 80mm;
+        text-align: left;
+        margin-top: 20mm; /* បន្ថែមចន្លោះពីលើ */
+    }
+    body {
+        text-align: center;
+    }
+    @page { margin: 0; size: 80mm auto; }
+    body *:not(#receipt) { display: none; }
 }
-body {
-    text-align: center; /* ចំកណ្តាល horizontally */
-}
-@page { margin: 0; size: 80mm auto; }
