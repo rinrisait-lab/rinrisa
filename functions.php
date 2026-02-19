@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // Hardcoded users (login system)
 $users = [
     'NSM'     => password_hash('NSM@admin', PASSWORD_DEFAULT),
-    'cashier' => password_hash('admin@123', PASSWORD_DEFAULT);
+    'cashier' => password_hash('admin@123', PASSWORD_DEFAULT),
      'risa' => password_hash('admin2323', PASSWORD_DEFAULT)
 ];
 
