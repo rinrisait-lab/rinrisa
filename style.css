@@ -1,15 +1,12 @@
 @media print {
     body {
-        display: flex;
-        justify-content: center; /* horizontal center */
-        align-items: flex-start; /* top */
-        height: 100vh; /* full page height */
         margin: 0;
         padding: 0;
     }
 
     #receipt {
         width: 80mm;
+        margin: 0 auto; /* ចំកណ្តាល horizontal */
         font-size: 12pt;
         border-collapse: collapse;
     }
@@ -31,6 +28,6 @@
     }
 
     body *:not(#receipt) {
-        display: none; /* hide everything else */
+        display: none;
     }
 }
