@@ -1,17 +1,16 @@
-/* សម្រាប់ print */
 @media print {
     body {
         margin: 0;
         padding: 0;
-        text-align: center; /* ចំកណ្តាល horizontally */
+        text-align: center;
     }
 
     #receipt {
-        display: inline-block;       /* inline block ដើម្បីចំកណ្តាល horizontally */
-        text-align: left;            /* content align left */
-        width: 80mm;                 /* ទទឹង receipt printer 80mm */
+        display: inline-block;
+        text-align: left;
+        width: 80mm;
         font-size: 12pt;
-        margin-top: 10mm;            /* spacing from top */
+        margin-top: 15mm; /* adjust spacing from top */
     }
 
     #receipt table {
@@ -22,15 +21,14 @@
     #receipt th, #receipt td {
         border: 1px solid #000;
         padding: 5px;
-        text-align: left;
     }
 
     body *:not(#receipt) {
-        display: none;               /* លាក់អ្វីៗក្រៅ receipt */
+        display: none;
     }
 
     @page {
-        margin: 0;                   /* remove page margins */
-        size: 80mm auto;             /* printer 80mm */
+        size: 80mm auto;
+        margin: 0;
     }
 }
