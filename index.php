@@ -101,7 +101,7 @@ $cart = $_SESSION['cart'];
 <?php if($cart): ?>
 <h2>Receipt</h2>
 <div id="receipt">
-    <h2>POS Receipt</h2>
+    <h2> Mart BUTHMAIYA Receipt</h2>
     <table>
         <thead>
             <tr>
