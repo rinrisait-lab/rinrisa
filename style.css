@@ -1,14 +1,17 @@
 @media print {
-    body * {
-        display: none;  /* hide everything else */
+    body {
+        display: flex;
+        justify-content: center; /* horizontal center */
+        align-items: flex-start; /* top */
+        height: 100vh; /* full page height */
+        margin: 0;
+        padding: 0;
     }
 
     #receipt {
-        display: block;
-        margin: 0 auto;       /* center horizontally */
-        width: 80mm;          /* width for thermal printer */
-        padding: 0;
+        width: 80mm;
         font-size: 12pt;
+        border-collapse: collapse;
     }
 
     #receipt table {
@@ -23,12 +26,11 @@
     }
 
     @page {
-        size: 80mm auto;      /* set page size for thermal printer */
+        size: 80mm auto;
         margin: 0;
     }
 
-    body {
-        margin: 0;
-        padding: 0;
+    body *:not(#receipt) {
+        display: none; /* hide everything else */
     }
 }
