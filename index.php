@@ -6,6 +6,7 @@ $products = [
     ['id'=>1, 'name'=>'Tea', 'price'=>2.50],
     ['id'=>2, 'name'=>'Coffee', 'price'=>3.50],
     ['id'=>3, 'name'=>'Coka', 'price'=>0.50],
+    ['id'=>4, 'name'=>'Cocoun', 'price'=>1.50],
 ];
 
 // Initialize cart in session
