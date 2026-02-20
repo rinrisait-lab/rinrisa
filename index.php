@@ -142,36 +142,49 @@ $cart = $_SESSION['cart'];
     <input type="number" name="new_qty" value="1" min="1">
     <button type="submit" name="add_new_product">➕ Add Product</button>
 </form>
-</div>
 
 <!-- ================= Cart / Receipt ================= -->
 <?php if($cart): ?>
-<div class="section">
 <h2>Receipt</h2>
-<table>
-    <thead>
-        <tr><th>#</th><th>Product</th><th>Qty</th><th>Total</th></tr>
-    </thead>
-    <tbody>
-    <?php $grandTotal = 0; foreach($cart as $i=>$item): $grandTotal += $item['total']; ?>
-        <tr>
-            <td><?= $i+1 ?></td>
-            <td><?= $item['name'] ?></td>
-            <td><?= $item['qty'] ?></td>
-            <td>$<?= number_format($item['total'],2) ?></td>
-        </tr>
-    <?php endforeach; ?>
-    </tbody>
-    <tfoot>
-        <tr><td colspan="3">Grand Total</td><td>$<?= number_format($grandTotal,2) ?></td></tr>
-    </tfoot>
-</table>
+<div id="receipt">
+    <h2>BUTHMAIYA Mart Receipt</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            $grandTotal = 0;
+            foreach($cart as $i=>$item):
+                $grandTotal += $item['total'];
+            ?>
+            <tr>
+                <td><?= $i+1 ?></td>
+                <td><?= $item['name'] ?></td>
+                <td><?= $item['qty'] ?></td>
+                <td>$<?= number_format($item['total'],2) ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Grand Total</td>
+                <td>$<?= number_format($grandTotal,2) ?></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
 
 <button onclick="window.print()">🖨 Print Receipt</button>
+
 <form method="post">
-    <button type="submit" name="clear_cart">Clear Cart</button>
+    <button type="submit" name="clear_cart">Clear</button>
 </form>
-</div>
 <?php endif; ?>
 
 </body>
