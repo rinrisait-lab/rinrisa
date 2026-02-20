@@ -35,6 +35,14 @@ if (!isLoggedIn()) {
 </html>
 <?php exit; }
 
+/* ================= INIT PRODUCTS & CART ================= */
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [
+        ['id'=>1,'name'=>'Tea','price'=>2.50],
+        ['id'=>2,'name'=>'Coffee','price'=>3.50],
+        ['id'=>3,'name'=>'Coka','price'=>0.50]
+    ];
+}
 
 $products = &$_SESSION['products'];
 
