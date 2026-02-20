@@ -166,40 +166,44 @@ $cart = $_SESSION['cart'];
 <!-- ================= Cart / Receipt ================= -->
 <?php if($cart): ?>
 <h2>Receipt</h2>
-<table border="1" cellpadding="5" cellspacing="0">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Product</th>
-            <th>Qty</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php 
-        $grandTotal = 0;
-        foreach($cart as $i=>$item):
-            $grandTotal += $item['total'];
-        ?>
-        <tr>
-            <td><?= $i+1 ?></td>
-            <td><?= $item['name'] ?></td>
-            <td><?= $item['qty'] ?></td>
-            <td>$<?= number_format($item['total'],2) ?></td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="3">Grand Total</td>
-            <td>$<?= number_format($grandTotal,2) ?></td>
-        </tr>
-    </tfoot>
-</table>
+<div id="receipt">
+    <h2>BUTHMAIYA Mart Receipt</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            $grandTotal = 0;
+            foreach($cart as $i=>$item):
+                $grandTotal += $item['total'];
+            ?>
+            <tr>
+                <td><?= $i+1 ?></td>
+                <td><?= $item['name'] ?></td>
+                <td><?= $item['qty'] ?></td>
+                <td>$<?= number_format($item['total'],2) ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Grand Total</td>
+                <td>$<?= number_format($grandTotal,2) ?></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
 
 <button onclick="window.print()">🖨 Print Receipt</button>
+
 <form method="post">
-    <button type="submit" name="clear_cart">Clear Cart</button>
+    <button type="submit" name="clear_cart">Clear</button>
 </form>
 <?php endif; ?>
 
