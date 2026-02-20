@@ -36,14 +36,19 @@ if (!isLoggedIn()) {
 <?php exit; }
 
 /* ================= INIT PRODUCTS & CART ================= */
-if (!isset($_SESSION['products'])) {
+// Load products from JSON file
+$productsFile = 'products.json';
+if(file_exists($productsFile)){
+    $_SESSION['products'] = json_decode(file_get_contents($productsFile), true);
+} else {
     $_SESSION['products'] = [
         ['id'=>1,'name'=>'Tea','price'=>2.50],
         ['id'=>2,'name'=>'Coffee','price'=>3.50],
         ['id'=>3,'name'=>'Coka','price'=>0.50]
     ];
+    // Save initial products
+    file_put_contents($productsFile, json_encode($_SESSION['products'], JSON_PRETTY_PRINT));
 }
-
 $products = &$_SESSION['products'];
 
 if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
@@ -57,14 +62,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         $name = trim($_POST['system_name']);
         $price = (float)$_POST['system_price'];
         $products[] = ['id'=>$newId,'name'=>$name,'price'=>$price];
+        // Save to JSON file
+        file_put_contents($productsFile, json_encode($products, JSON_PRETTY_PRINT));
     }
 
-    // Add product to cart (check duplicate by ID)
+    // Add product to cart
     if (isset($_POST['product_id'], $_POST['quantity'])) {
         $id = (int)$_POST['product_id'];
         $qty = max(1,(int)$_POST['quantity']);
 
-        // Check if product already in cart
+        // Check duplicate in cart
         $foundIndex = null;
         foreach($_SESSION['cart'] as $index => $item){
             if($item['id']==$id){
@@ -73,8 +80,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
             }
         }
 
-        if($foundIndex!==null){
-            // Update existing item
+        if($foundIndex !== null){
+            // Update qty
             $_SESSION['cart'][$foundIndex]['qty'] += $qty;
             $_SESSION['cart'][$foundIndex]['total'] = $_SESSION['cart'][$foundIndex]['price'] * $_SESSION['cart'][$foundIndex]['qty'];
         } else {
