@@ -2,7 +2,6 @@
 session_start();
 require 'functions.php';
 
-/* ================= LOGIN CHECK ================= */
 if (!isLoggedIn()) {
     $error = '';
     if (isset($_POST['login'])) {
@@ -35,7 +34,7 @@ if (!isLoggedIn()) {
 </html>
 <?php exit; }
 
-/* ================= INIT PRODUCTS & CART ================= */
+// ================= INIT =================
 if (!isset($_SESSION['products'])) {
     $_SESSION['products'] = [
         ['id'=>1,'name'=>'Tea','price'=>2.50],
@@ -44,13 +43,12 @@ if (!isset($_SESSION['products'])) {
     ];
 }
 $products = &$_SESSION['products'];
-
 if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
 
-/* ================= POST LOGIC ================= */
+// ================= POST =================
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 
-    // 1️⃣ Add product to system dropdown
+    // Add product to system dropdown
     if (isset($_POST['add_product_system'])) {
         $newId = time();
         $name = trim($_POST['system_name']);
@@ -58,26 +56,27 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         $products[] = ['id'=>$newId,'name'=>$name,'price'=>$price];
     }
 
-    // 2️⃣ Add existing product from block or dropdown
+    // Add existing product to cart
     if (isset($_POST['product_id'])) {
         $id = (int)$_POST['product_id'];
         $qty = max(1,(int)$_POST['quantity']);
 
+        // find product in products list
         foreach ($products as $p) {
             if ($p['id']==$id) {
-                // Check if same name+price already in cart
                 $found=false;
+                // check if already in cart by id
                 foreach ($_SESSION['cart'] as &$item) {
-                    if ($item['name']==$p['name'] && $item['price']==$p['price']) {
+                    if ($item['id']==$p['id']) {
                         $item['qty'] += $qty;
-                        $item['total'] = $item['price'] * $item['qty'];
+                        $item['total'] = $item['price']*$item['qty'];
                         $found=true;
                         break;
                     }
                 }
                 if (!$found) {
                     $_SESSION['cart'][]=[
-                        'id'=>time(),
+                        'id'=>$p['id'], // <-- use product id, not time()
                         'name'=>$p['name'],
                         'price'=>$p['price'],
                         'qty'=>$qty,
@@ -89,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         }
     }
 
-    // 3️⃣ Add new product directly to cart
+    // Add new product directly to cart
     if (isset($_POST['add_new_product'])) {
         $name = trim($_POST['new_name']);
         $price = (float)$_POST['new_price'];
@@ -99,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         foreach ($_SESSION['cart'] as &$item) {
             if ($item['name']==$name && $item['price']==$price) {
                 $item['qty'] += $qty;
-                $item['total'] = $item['price'] * $item['qty'];
+                $item['total'] = $item['price']*$item['qty'];
                 $found=true;
                 break;
             }
@@ -115,11 +114,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         }
     }
 
-    // 4️⃣ Clear cart
+    // Clear cart
     if(isset($_POST['clear_cart'])) $_SESSION['cart']=[];
 }
 
-$cart=$_SESSION['cart'];
+$cart = $_SESSION['cart'];
 ?>
 
 <!DOCTYPE html>
@@ -142,7 +141,6 @@ th, td{border:1px solid #ccc;padding:5px;text-align:center;}
 
 <p>Logged in as: <?= htmlspecialchars($_SESSION['user']) ?> | <a href="logout.php">Logout</a></p>
 
-<!-- Add Product to System -->
 <div class="section">
 <h3>Add Product to System (Dropdown)</h3>
 <form method="post">
@@ -152,7 +150,6 @@ th, td{border:1px solid #ccc;padding:5px;text-align:center;}
 </form>
 </div>
 
-<!-- Product Blocks -->
 <div class="section">
 <h3>Products</h3>
 <div class="product-blocks">
@@ -170,7 +167,6 @@ $<?= number_format($p['price'],2) ?><br>
 </div>
 </div>
 
-<!-- Add New Product Directly to Cart -->
 <div class="section">
 <h3>Add New Product Directly to Cart</h3>
 <form method="post">
@@ -181,7 +177,6 @@ $<?= number_format($p['price'],2) ?><br>
 </form>
 </div>
 
-<!-- Receipt -->
 <?php if($cart): ?>
 <h2>Receipt</h2>
 <div id="receipt">
