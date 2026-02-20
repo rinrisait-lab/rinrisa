@@ -44,9 +44,6 @@ if (!isLoggedIn()) {
 <?php
 exit;
 }
-
-/* ================= PRODUCT LIST ================= */
-
 $products = [
     ['id'=>1, 'name'=>'Tea', 'price'=>2.50],
     ['id'=>2, 'name'=>'Coffee', 'price'=>3.50],
@@ -57,21 +54,15 @@ $products = [
 
 if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
 
-/* ================= POST LOGIC ================= */
-
+// ================== PHP POST LOGIC ==================
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     // Add existing product
     if (isset($_POST['product_id'], $_POST['quantity'])) {
-
         $id = (int)$_POST['product_id'];
         $qty = max(1, (int)$_POST['quantity']);
-
         foreach ($products as $p) {
             if ($p['id'] == $id) {
-
                 $found = false;
-
                 foreach ($_SESSION['cart'] as &$item) {
                     if ($item['id'] == $id) {
                         $item['qty'] += $qty;
@@ -80,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         break;
                     }
                 }
-
                 if (!$found) {
                     $_SESSION['cart'][] = [
                         'id'=>$p['id'],
@@ -94,15 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    // Add custom product
+    // Add new product (custom)
     if (isset($_POST['add_new_product'])) {
-
         $name = trim($_POST['new_name']);
         $price = (float)$_POST['new_price'];
         $qty = max(1,(int)$_POST['new_qty']);
-
         $_SESSION['cart'][] = [
-            'id'=>time(),
+            'id'=>time(), // unique id
             'name'=>$name,
             'price'=>$price,
             'qty'=>$qty,
@@ -128,24 +116,21 @@ $cart = $_SESSION['cart'];
 </head>
 <body>
 
-<p>
-Logged in as: <?= htmlspecialchars($_SESSION['user']) ?> 
-| <a href="logout.php">Logout</a>
-</p>
+<p>Logged in as: <?= htmlspecialchars($_SESSION['user']) ?> | <a href="logout.php">Logout</a></p>
 
+<!-- ================= Existing Products Form ================= -->
 <h3>Select Product</h3>
 <form method="post">
     <select name="product_id">
         <?php foreach($products as $p): ?>
-        <option value="<?= $p['id'] ?>">
-            <?= $p['name'] ?> ($<?= number_format($p['price'],2) ?>)
-        </option>
+        <option value="<?= $p['id'] ?>"><?= $p['name'] ?> ($<?= number_format($p['price'],2) ?>)</option>
         <?php endforeach; ?>
     </select>
     <input type="number" name="quantity" value="1" min="1">
     <button type="submit">OK</button>
 </form>
 
+<!-- ================= Add New Product Form ================= -->
 <h3>Add New Product</h3>
 <form method="post">
     <input type="text" name="new_name" placeholder="Product Name" required>
@@ -154,31 +139,44 @@ Logged in as: <?= htmlspecialchars($_SESSION['user']) ?>
     <button type="submit" name="add_new_product">➕ Add Product</button>
 </form>
 
+<!-- ================= Cart / Receipt ================= -->
 <?php if($cart): ?>
 <h2>Receipt</h2>
-
 <div id="receipt">
-    <h2>BUTHMAIYA Mart</h2>
-    <hr>
-
-    <table width="100%">
-        <?php 
-        $grandTotal = 0;
-        foreach($cart as $i=>$item):
-            $grandTotal += $item['total'];
-        ?>
-        <tr>
-            <td><?= $item['name'] ?> x<?= $item['qty'] ?></td>
-            <td align="right">$<?= number_format($item['total'],2) ?></td>
-        </tr>
-        <?php endforeach; ?>
+    <h2>BUTHMAIYA Mart Receipt</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            $grandTotal = 0;
+            foreach($cart as $i=>$item):
+                $grandTotal += $item['total'];
+            ?>
+            <tr>
+                <td><?= $i+1 ?></td>
+                <td><?= $item['name'] ?></td>
+                <td><?= $item['qty'] ?></td>
+                <td>$<?= number_format($item['total'],2) ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Grand Total</td>
+                <td>$<?= number_format($grandTotal,2) ?></td>
+            </tr>
+        </tfoot>
     </table>
-
-    <hr>
-    <p><strong>Total: $<?= number_format($grandTotal,2) ?></strong></p>
 </div>
 
-<button onclick="window.print()">🖨 Print</button>
+<button onclick="window.print()">🖨 Print Receipt</button>
 
 <form method="post">
     <button type="submit" name="clear_cart">Clear</button>
