@@ -51,30 +51,36 @@ if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
 /* ================= POST LOGIC ================= */
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 
-    // 1️⃣ Add product to system dropdown
+    // Add product to system
     if (isset($_POST['add_product_system'])) {
-        $newId = max(array_column($products,'id')) + 1; // stable ID
+        $newId = max(array_column($products,'id')) + 1;
         $name = trim($_POST['system_name']);
         $price = (float)$_POST['system_price'];
         $products[] = ['id'=>$newId,'name'=>$name,'price'=>$price];
     }
 
-    // 2️⃣ Add product to cart from product blocks
+    // Add product to cart (check duplicate by ID)
     if (isset($_POST['product_id'], $_POST['quantity'])) {
         $id = (int)$_POST['product_id'];
         $qty = max(1,(int)$_POST['quantity']);
-        foreach($products as $p){
-            if($p['id']==$id){
-                $found=false;
-                foreach($_SESSION['cart'] as &$item){
-                    if($item['id']==$id){
-                        $item['qty'] += $qty;
-                        $item['total'] = $item['price']*$item['qty'];
-                        $found = true;
-                        break;
-                    }
-                }
-                if(!$found){
+
+        // Check if product already in cart
+        $foundIndex = null;
+        foreach($_SESSION['cart'] as $index => $item){
+            if($item['id']==$id){
+                $foundIndex = $index;
+                break;
+            }
+        }
+
+        if($foundIndex!==null){
+            // Update existing item
+            $_SESSION['cart'][$foundIndex]['qty'] += $qty;
+            $_SESSION['cart'][$foundIndex]['total'] = $_SESSION['cart'][$foundIndex]['price'] * $_SESSION['cart'][$foundIndex]['qty'];
+        } else {
+            // Add new item
+            foreach($products as $p){
+                if($p['id']==$id){
                     $_SESSION['cart'][] = [
                         'id'=>$p['id'],
                         'name'=>$p['name'],
@@ -82,12 +88,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
                         'qty'=>$qty,
                         'total'=>$p['price']*$qty
                     ];
+                    break;
                 }
             }
         }
     }
 
-    // 3️⃣ Clear cart
+    // Clear cart
     if(isset($_POST['clear_cart'])) $_SESSION['cart'] = [];
 }
 
@@ -114,9 +121,9 @@ th, td{border:1px solid #ccc;padding:5px;text-align:center;}
 
 <p>Logged in as: <?= htmlspecialchars($_SESSION['user']) ?> | <a href="logout.php">Logout</a></p>
 
-<!-- ================= 1️⃣ Add Product to System ================= -->
+<!-- Add Product to System -->
 <div class="section">
-<h3>Add Product to System (Dropdown)</h3>
+<h3>Add Product to System</h3>
 <form method="post">
 <input type="text" name="system_name" placeholder="Product Name" required>
 <input type="number" step="0.01" name="system_price" placeholder="Price" required>
@@ -124,7 +131,7 @@ th, td{border:1px solid #ccc;padding:5px;text-align:center;}
 </form>
 </div>
 
-<!-- ================= 2️⃣ Product Blocks ================= -->
+<!-- Product Blocks -->
 <div class="section">
 <h3>Products</h3>
 <div class="product-blocks">
@@ -142,7 +149,7 @@ $<?= number_format($p['price'],2) ?><br>
 </div>
 </div>
 
-<!-- ================= Cart / Receipt ================= -->
+<!-- Cart / Receipt -->
 <?php if($cart): ?>
 <h2>Receipt</h2>
 <div id="receipt">
