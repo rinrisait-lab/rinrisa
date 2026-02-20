@@ -50,15 +50,16 @@ if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
 
 /* ================= POST LOGIC ================= */
 if ($_SERVER['REQUEST_METHOD']=='POST') {
+
     // 1️⃣ Add product to system dropdown
     if (isset($_POST['add_product_system'])) {
-        $newId = time();
+        $newId = max(array_column($products,'id')) + 1; // stable ID
         $name = trim($_POST['system_name']);
         $price = (float)$_POST['system_price'];
         $products[] = ['id'=>$newId,'name'=>$name,'price'=>$price];
     }
 
-    // 2️⃣ Add existing product to cart
+    // 2️⃣ Add product to cart (from product blocks)
     if (isset($_POST['product_id'], $_POST['quantity'])) {
         $id = (int)$_POST['product_id'];
         $qty = max(1,(int)$_POST['quantity']);
@@ -67,31 +68,45 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
                 $found=false;
                 foreach($_SESSION['cart'] as &$item){
                     if($item['id']==$id){
-                        $item['qty']+=$qty;
-                        $item['total']=$item['price']*$item['qty'];
-                        $found=true; break;
+                        $item['qty'] += $qty;
+                        $item['total'] = $item['price']*$item['qty'];
+                        $found = true;
+                        break;
                     }
                 }
                 if(!$found){
-                    $_SESSION['cart'][]=['id'=>$p['id'],'name'=>$p['name'],'price'=>$p['price'],'qty'=>$qty,'total'=>$p['price']*$qty];
+                    $_SESSION['cart'][] = [
+                        'id'=>$p['id'],
+                        'name'=>$p['name'],
+                        'price'=>$p['price'],
+                        'qty'=>$qty,
+                        'total'=>$p['price']*$qty
+                    ];
                 }
             }
         }
     }
 
-    // 3️⃣ Add new product directly to cart
+    // 3️⃣ Add new product manually to cart
     if (isset($_POST['add_new_product'])){
-        $name=trim($_POST['new_name']);
-        $price=(float)$_POST['new_price'];
-        $qty=max(1,(int)$_POST['new_qty']);
-        $_SESSION['cart'][]=['id'=>time(),'name'=>$name,'price'=>$price,'qty'=>$qty,'total'=>$price*$qty];
+        $name = trim($_POST['new_name']);
+        $price = (float)$_POST['new_price'];
+        $qty = max(1,(int)$_POST['new_qty']);
+        $newId = time() + rand(1,1000); // unique ID for cart item
+        $_SESSION['cart'][] = [
+            'id'=>$newId,
+            'name'=>$name,
+            'price'=>$price,
+            'qty'=>$qty,
+            'total'=>$price*$qty
+        ];
     }
 
     // 4️⃣ Clear cart
-    if(isset($_POST['clear_cart'])) $_SESSION['cart']=[];
+    if(isset($_POST['clear_cart'])) $_SESSION['cart'] = [];
 }
 
-$cart=$_SESSION['cart'];
+$cart = $_SESSION['cart'];
 ?>
 
 <!DOCTYPE html>
@@ -130,7 +145,7 @@ th, td{border:1px solid #ccc;padding:5px;text-align:center;}
 <div class="product-blocks">
 <?php foreach($products as $p): ?>
 <div class="product-block">
-<strong><?= $p['name'] ?></strong><br>
+<strong><?= htmlspecialchars($p['name']) ?></strong><br>
 $<?= number_format($p['price'],2) ?><br>
 <form method="post">
 <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
@@ -140,6 +155,17 @@ $<?= number_format($p['price'],2) ?><br>
 </div>
 <?php endforeach; ?>
 </div>
+</div>
+
+<!-- ================= 3️⃣ Add New Product to Cart ================= -->
+<div class="section">
+<h3>Add New Product to Cart</h3>
+<form method="post">
+<input type="text" name="new_name" placeholder="Product Name" required>
+<input type="number" step="0.01" name="new_price" placeholder="Price" required>
+<input type="number" name="new_qty" value="1" min="1" required>
+<button type="submit" name="add_new_product">➕ Add to Cart</button>
+</form>
 </div>
 
 <!-- ================= Cart / Receipt ================= -->
@@ -159,7 +185,7 @@ $grandTotal+=$item['total'];
 ?>
 <tr>
 <td><?= $i+1 ?></td>
-<td><?= $item['name'] ?></td>
+<td><?= htmlspecialchars($item['name']) ?></td>
 <td><?= $item['qty'] ?></td>
 <td>$<?= number_format($item['total'],2) ?></td>
 </tr>
