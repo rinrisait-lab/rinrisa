@@ -52,7 +52,7 @@ if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
 if ($_SERVER['REQUEST_METHOD']=='POST') {
     // 1️⃣ Add product to system dropdown
     if (isset($_POST['add_product_system'])) {
-        $newId = time();
+        $newId = max(array_column($products,'id')) + 1; // ID ជាស្ថិរភាព
         $name = trim($_POST['system_name']);
         $price = (float)$_POST['system_price'];
         $products[] = ['id'=>$newId,'name'=>$name,'price'=>$price];
@@ -67,13 +67,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
                 $found=false;
                 foreach($_SESSION['cart'] as &$item){
                     if($item['id']==$id){
-                        $item['qty']+=$qty;
-                        $item['total']=$item['price']*$item['qty'];
-                        $found=true; break;
+                        $item['qty'] += $qty;
+                        $item['total'] = $item['price']*$item['qty'];
+                        $found=true; 
+                        break;
                     }
                 }
                 if(!$found){
-                    $_SESSION['cart'][]=['id'=>$p['id'],'name'=>$p['name'],'price'=>$p['price'],'qty'=>$qty,'total'=>$p['price']*$qty];
+                    $_SESSION['cart'][] = [
+                        'id'=>$p['id'],
+                        'name'=>$p['name'],
+                        'price'=>$p['price'],
+                        'qty'=>$qty,
+                        'total'=>$p['price']*$qty
+                    ];
                 }
             }
         }
@@ -81,17 +88,27 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
     // 3️⃣ Add new product directly to cart
     if (isset($_POST['add_new_product'])){
-        $name=trim($_POST['new_name']);
-        $price=(float)$_POST['new_price'];
-        $qty=max(1,(int)$_POST['new_qty']);
-        $_SESSION['cart'][]=['id'=>time(),'name'=>$name,'price'=>$price,'qty'=>$qty,'total'=>$price*$qty];
+        $name = trim($_POST['new_name']);
+        $price = (float)$_POST['new_price'];
+        $qty = max(1,(int)$_POST['new_qty']);
+
+        // ប្រើ ID អវិជ្ជមានសម្រាប់ new cart item
+        $newId = -count($_SESSION['cart']) - 1;
+
+        $_SESSION['cart'][] = [
+            'id'=>$newId,
+            'name'=>$name,
+            'price'=>$price,
+            'qty'=>$qty,
+            'total'=>$price*$qty
+        ];
     }
 
     // 4️⃣ Clear cart
-    if(isset($_POST['clear_cart'])) $_SESSION['cart']=[];
+    if(isset($_POST['clear_cart'])) $_SESSION['cart'] = [];
 }
 
-$cart=$_SESSION['cart'];
+$cart = $_SESSION['cart'];
 ?>
 
 <!DOCTYPE html>
@@ -130,7 +147,7 @@ th, td{border:1px solid #ccc;padding:5px;text-align:center;}
 <div class="product-blocks">
 <?php foreach($products as $p): ?>
 <div class="product-block">
-<strong><?= $p['name'] ?></strong><br>
+<strong><?= htmlspecialchars($p['name']) ?></strong><br>
 $<?= number_format($p['price'],2) ?><br>
 <form method="post">
 <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
@@ -159,7 +176,7 @@ $grandTotal+=$item['total'];
 ?>
 <tr>
 <td><?= $i+1 ?></td>
-<td><?= $item['name'] ?></td>
+<td><?= htmlspecialchars($item['name']) ?></td>
 <td><?= $item['qty'] ?></td>
 <td>$<?= number_format($item['total'],2) ?></td>
 </tr>
