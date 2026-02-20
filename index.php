@@ -50,54 +50,49 @@ if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
 
 /* ================= POST LOGIC ================= */
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-    // 1️⃣ Add product to system dropdown
-    if (isset($_POST['add_product_system'])) {
-        $newId = time();
-        $name = trim($_POST['system_name']);
-        $price = (float)$_POST['system_price'];
-        $products[] = ['id'=>$newId,'name'=>$name,'price'=>$price];
-    }
 
-    // Add product (existing or new) to cart without duplicates
-if (isset($_POST['product_id']) || isset($_POST['add_new_product'])) {
-
+    // Add existing product to cart
     if (isset($_POST['product_id'])) {
-        // Existing product from block or dropdown
         $id = (int)$_POST['product_id'];
         $qty = max(1,(int)$_POST['quantity']);
-        foreach ($products as $p) {
-            if ($p['id'] == $id) {
-                $found = false;
-                foreach ($_SESSION['cart'] as &$item) {
-                    if ($item['id'] == $id) {
-                        $item['qty'] += $qty;
-                        $item['total'] = $item['price'] * $item['qty'];
-                        $found = true;
-                        break;
-                    }
-                }
-                if (!$found) {
+
+        // Check if product already in cart
+        $found = false;
+        foreach ($_SESSION['cart'] as &$item) {
+            if ($item['id'] == $id) {
+                $item['qty'] += $qty;
+                $item['total'] = $item['price'] * $item['qty'];
+                $found = true;
+                break;
+            }
+        }
+
+        // If not found, add new row
+        if (!$found) {
+            foreach ($products as $p) {
+                if ($p['id'] == $id) {
                     $_SESSION['cart'][] = [
                         'id'=>$p['id'],
                         'name'=>$p['name'],
                         'price'=>$p['price'],
                         'qty'=>$qty,
-                        'total'=>$p['price'] * $qty
+                        'total'=>$p['price']*$qty
                     ];
+                    break;
                 }
             }
         }
     }
 
+    // Add new product directly to cart
     if (isset($_POST['add_new_product'])) {
-        // New product directly to cart
         $name = trim($_POST['new_name']);
         $price = (float)$_POST['new_price'];
         $qty = max(1,(int)$_POST['new_qty']);
-        $found = false;
 
+        $found = false;
         foreach ($_SESSION['cart'] as &$item) {
-            if ($item['name'] === $name && $item['price'] === $price) {
+            if ($item['name']==$name && $item['price']==$price) {
                 $item['qty'] += $qty;
                 $item['total'] = $item['price'] * $item['qty'];
                 $found = true;
@@ -115,12 +110,10 @@ if (isset($_POST['product_id']) || isset($_POST['add_new_product'])) {
             ];
         }
     }
-}
 
-    // 4️⃣ Clear cart
+    // Clear cart
     if(isset($_POST['clear_cart'])) $_SESSION['cart']=[];
 }
-
 $cart=$_SESSION['cart'];
 ?>
 
