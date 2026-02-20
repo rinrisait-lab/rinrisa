@@ -141,17 +141,6 @@ $<?= number_format($p['price'],2) ?><br>
 </div>
 </div>
 
-<!-- ================= 3️⃣ Add New Product Directly to Cart ================= -->
-<div class="section">
-<h3>Add New Product Directly to Cart</h3>
-<form method="post">
-<input type="text" name="new_name" placeholder="Product Name" required>
-<input type="number" name="new_price" step="0.01" placeholder="Price" required>
-<input type="number" name="new_qty" value="1" min="1">
-<button type="submit" name="add_new_product">➕ Add Product</button>
-</form>
-</div>
-
 <!-- ================= Cart / Receipt ================= -->
 <?php if($cart): ?>
 <h2>Receipt</h2>
