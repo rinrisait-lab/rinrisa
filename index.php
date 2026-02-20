@@ -37,7 +37,6 @@ if (!isLoggedIn()) {
 </html>
 <?php exit; }
 
-
 /* ================= INIT PRODUCTS & CART ================= */
 if (!isset($_SESSION['products'])) {
     $_SESSION['products'] = [
@@ -60,19 +59,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $newId = time();
         $name = trim($_POST['system_name']);
         $price = (float)$_POST['system_price'];
-
-        $products[] = [
-            'id'=>$newId,
-            'name'=>$name,
-            'price'=>$price
-        ];
+        $products[] = ['id'=>$newId, 'name'=>$name, 'price'=>$price];
     }
 
     // 2️⃣ Add existing product to cart
     if (isset($_POST['product_id'], $_POST['quantity'])) {
         $id = (int)$_POST['product_id'];
         $qty = max(1, (int)$_POST['quantity']);
-
         foreach ($products as $p) {
             if ($p['id'] == $id) {
                 $found = false;
@@ -96,27 +89,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     }
-<!-- ================= Product Blocks ================= -->
-<div class="section">
-<h3>Products</h3>
-<?php foreach($products as $p): ?>
-<div class="product-block">
-    <strong><?= $p['name'] ?></strong><br>
-    $<?= number_format($p['price'],2) ?><br>
-    <form method="post">
-        <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
-        <input type="number" name="quantity" value="1" min="1"><br>
-        <button type="submit" name="add_to_cart">Add to Cart</button>
-    </form>
-</div>
-<?php endforeach; ?>
-</div>
+
     // 3️⃣ Add new product directly to cart
     if (isset($_POST['add_new_product'])) {
         $name = trim($_POST['new_name']);
         $price = (float)$_POST['new_price'];
         $qty = max(1,(int)$_POST['new_qty']);
-
         $_SESSION['cart'][] = [
             'id'=>time(),
             'name'=>$name,
@@ -145,6 +123,8 @@ $cart = $_SESSION['cart'];
         .section { border:1px solid #ccc; padding:15px; margin-bottom:20px; border-radius:5px; }
         h3 { margin-top:0; }
         input, select, button { margin:5px 0; }
+        table { border-collapse: collapse; width:50%; }
+        th, td { border:1px solid #ccc; padding:5px; text-align:center; }
     </style>
 </head>
 <body>
@@ -184,49 +164,48 @@ $cart = $_SESSION['cart'];
     <input type="number" name="new_qty" value="1" min="1">
     <button type="submit" name="add_new_product">➕ Add Product</button>
 </form>
+</div>
 
 <!-- ================= Cart / Receipt ================= -->
 <?php if($cart): ?>
+<div class="section">
 <h2>Receipt</h2>
-<div id="receipt">
-    <h2>BUTHMAIYA Mart Receipt</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th>Qty</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            $grandTotal = 0;
-            foreach($cart as $i=>$item):
-                $grandTotal += $item['total'];
-            ?>
-            <tr>
-                <td><?= $i+1 ?></td>
-                <td><?= $item['name'] ?></td>
-                <td><?= $item['qty'] ?></td>
-                <td>$<?= number_format($item['total'],2) ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="3">Grand Total</td>
-                <td>$<?= number_format($grandTotal,2) ?></td>
-            </tr>
-        </tfoot>
-    </table>
-</div>
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php 
+        $grandTotal = 0;
+        foreach($cart as $i=>$item):
+            $grandTotal += $item['total'];
+        ?>
+        <tr>
+            <td><?= $i+1 ?></td>
+            <td><?= $item['name'] ?></td>
+            <td><?= $item['qty'] ?></td>
+            <td>$<?= number_format($item['total'],2) ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Grand Total</td>
+            <td>$<?= number_format($grandTotal,2) ?></td>
+        </tr>
+    </tfoot>
+</table>
 
 <button onclick="window.print()">🖨 Print Receipt</button>
-
 <form method="post">
     <button type="submit" name="clear_cart">Clear</button>
 </form>
+</div>
 <?php endif; ?>
 
 </body>
