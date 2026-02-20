@@ -88,21 +88,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         }
     }
 
-    // Add new product directly to cart
-    if (isset($_POST['add_new_product'])) {
-        $name = trim($_POST['new_name']);
-        $price = (float)$_POST['new_price'];
-        $qty = max(1,(int)$_POST['new_qty']);
-
-        $found=false;
-        foreach ($_SESSION['cart'] as &$item) {
-            if ($item['name']==$name && $item['price']==$price) {
-                $item['qty'] += $qty;
-                $item['total'] = $item['price']*$item['qty'];
-                $found=true;
-                break;
-            }
-        }
+   
         if (!$found) {
             $_SESSION['cart'][]=[
                 'id'=>time(),
