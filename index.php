@@ -36,21 +36,7 @@ if (!isLoggedIn()) {
 </body>
 </html>
 <?php exit; }
-<!-- ================= Product Blocks ================= -->
-<div class="section">
-<h3>Products</h3>
-<?php foreach($products as $p): ?>
-<div class="product-block">
-    <strong><?= $p['name'] ?></strong><br>
-    $<?= number_format($p['price'],2) ?><br>
-    <form method="post">
-        <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
-        <input type="number" name="quantity" value="1" min="1"><br>
-        <button type="submit" name="add_to_cart">Add to Cart</button>
-    </form>
-</div>
-<?php endforeach; ?>
-</div>
+
 
 /* ================= INIT PRODUCTS & CART ================= */
 if (!isset($_SESSION['products'])) {
@@ -110,7 +96,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     }
-
+<!-- ================= Product Blocks ================= -->
+<div class="section">
+<h3>Products</h3>
+<?php foreach($products as $p): ?>
+<div class="product-block">
+    <strong><?= $p['name'] ?></strong><br>
+    $<?= number_format($p['price'],2) ?><br>
+    <form method="post">
+        <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
+        <input type="number" name="quantity" value="1" min="1"><br>
+        <button type="submit" name="add_to_cart">Add to Cart</button>
+    </form>
+</div>
+<?php endforeach; ?>
+</div>
     // 3️⃣ Add new product directly to cart
     if (isset($_POST['add_new_product'])) {
         $name = trim($_POST['new_name']);
