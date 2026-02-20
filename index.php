@@ -52,7 +52,22 @@ if (!isset($_SESSION['cart'])) {
 }
 
 /* ================= POST LOGIC ================= */
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') 
+{
+
+    // 1️⃣ Add product to system dropdown
+    if (isset($_POST['add_product_system'])) {
+        $newId = time();
+        $name = trim($_POST['system_name']);
+        $price = (float)$_POST['system_price'];
+
+        $products[] = [
+            'id'=>$newId,
+            'name'=>$name,
+            'price'=>$price
+        ];
+    }
+{
 
     // Add existing product to cart
     if (isset($_POST['product_id'], $_POST['quantity'])) {
