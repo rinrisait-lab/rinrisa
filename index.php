@@ -40,7 +40,8 @@ if (!isset($_SESSION['products'])) {
     $_SESSION['products'] = [
         ['id'=>1,'name'=>'Tea','price'=>2.50],
         ['id'=>2,'name'=>'Coffee','price'=>3.50],
-        ['id'=>3,'name'=>'Coka','price'=>0.50]
+        ['id'=>3,'name'=>'Coka','price'=>0.50],
+        ['id'=>3,'name'=>'cake','price'=>10.50]
     ];
 }
 
