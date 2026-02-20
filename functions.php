@@ -1,19 +1,20 @@
 <?php
-// Start session
+// ---------------------
+// START SESSION
+// ---------------------
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Hardcoded users (login system)
+// ---------------------
+// USERS LOGIN SYSTEM
+// ---------------------
 $users = [
     'NSM'     => password_hash('NSM@admin', PASSWORD_DEFAULT),
     'cashier' => password_hash('admin@123', PASSWORD_DEFAULT),
-     'risa' => password_hash('admin2323', PASSWORD_DEFAULT)
+    'risa'    => password_hash('admin2323', PASSWORD_DEFAULT)
 ];
 
-// ---------------------
-// LOGIN FUNCTIONS
-// ---------------------
 function login($username, $password) {
     global $users;
     if (isset($users[$username]) && password_verify($password, $users[$username])) {
@@ -32,16 +33,28 @@ function logout() {
 }
 
 // ---------------------
-// PRODUCTS (hardcoded or from DB)
+// PRODUCTS INITIALIZATION
 // ---------------------
-function getProducts() {
-    return [
-        ['id'=>1, 'name'=>'Tea', 'sell_price'=>2.50],
-        ['id'=>2, 'name'=>'Coffee', 'sell_price'=>3.50],
-        ['id'=>3, 'name'=>'Coka', 'sell_price'=>0.50],
-        ['id'=>4, 'name'=>'Cocoun', 'sell_price'=>1.50],
-        ['id'=>5, 'name'=>'Cake', 'sell_price'=>6.50],
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [
+        ['id'=>1,'name'=>'Tea','price'=>2.50],
+        ['id'=>2,'name'=>'Coffee','price'=>3.50],
+        ['id'=>3,'name'=>'Coka','price'=>0.50],
+        ['id'=>4,'name'=>'Cake','price'=>10.50]
     ];
+}
+
+// ---------------------
+// ADD PRODUCT FUNCTION
+// ---------------------
+function addProduct($name, $price) {
+    if (!isset($_SESSION['products']) || empty($_SESSION['products'])) {
+        $_SESSION['products'] = [];
+        $id = 1;
+    } else {
+        $id = end($_SESSION['products'])['id'] + 1;
+    }
+    $_SESSION['products'][] = ['id'=>$id, 'name'=>$name, 'price'=>$price];
 }
 
 // ---------------------
@@ -57,24 +70,31 @@ function addToCart($product_id, $qty) {
 }
 
 function clearCart() {
-    unset($_SESSION['cart']);
+    unset($_SESSION['cart']); // only clear cart, login stays
 }
 
 function getCartProducts() {
     $cartItems = [];
     if (!isset($_SESSION['cart'])) return $cartItems;
 
-    $products = getProducts();
+    $products = $_SESSION['products'];
     foreach ($_SESSION['cart'] as $pid => $qty) {
         foreach ($products as $p) {
             if ($p['id'] == $pid) {
                 $p['qty'] = $qty;
-                $p['total'] = $p['sell_price'] * $qty;
+                $p['total'] = $p['price'] * $qty;
                 $cartItems[] = $p;
                 break;
             }
         }
     }
     return $cartItems;
+}
+
+// ---------------------
+// GET PRODUCTS FUNCTION
+// ---------------------
+function getProducts() {
+    return $_SESSION['products'];
 }
 ?>
