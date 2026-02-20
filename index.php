@@ -19,13 +19,20 @@ if (!isLoggedIn()) {
 <head>
     <meta charset="UTF-8">
     <title>Login - POS System</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<form method="post">
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <button type="submit" name="login">Login</button>
-</form>
+<body class="login-body">
+<div class="login-box">
+    <h2>POS System Login</h2>
+    <?php if($error): ?>
+        <p class="error"><?= $error ?></p>
+    <?php endif; ?>
+    <form method="post">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit" name="login">Login</button>
+    </form>
+</div>
 </body>
 </html>
 <?php exit; }
@@ -44,14 +51,27 @@ if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
-
 /* ================== POST LOGIC ================== */
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    // Add product to cart by product block
-    if (isset($_POST['add_to_cart'])) {
+    // 1️⃣ Add product to system dropdown
+    if (isset($_POST['add_product_system'])) {
+        $newId = time();
+        $name = trim($_POST['system_name']);
+        $price = (float)$_POST['system_price'];
+
+        $products[] = [
+            'id'=>$newId,
+            'name'=>$name,
+            'price'=>$price
+        ];
+    }
+
+    // 2️⃣ Add existing product to cart
+    if (isset($_POST['product_id'], $_POST['quantity'])) {
         $id = (int)$_POST['product_id'];
         $qty = max(1, (int)$_POST['quantity']);
+
         foreach ($products as $p) {
             if ($p['id'] == $id) {
                 $found = false;
@@ -76,11 +96,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    // Add new product directly to cart
+    // 3️⃣ Add new product directly to cart
     if (isset($_POST['add_new_product'])) {
         $name = trim($_POST['new_name']);
         $price = (float)$_POST['new_price'];
         $qty = max(1,(int)$_POST['new_qty']);
+
         $_SESSION['cart'][] = [
             'id'=>time(),
             'name'=>$name,
@@ -104,36 +125,42 @@ $cart = $_SESSION['cart'];
 <head>
     <meta charset="UTF-8">
     <title>POS System BUTHMAIYA</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        body { font-family: Arial; }
-        .product-block { border:1px solid #ccc; padding:15px; margin:10px; display:inline-block; width:150px; text-align:center; border-radius:5px; }
-        .section { margin-bottom:20px; }
-        input[type=number]{ width:50px; }
-        table { border-collapse: collapse; width:50%; }
-        th, td { border:1px solid #ccc; padding:5px; text-align:center; }
+        .section { border:1px solid #ccc; padding:15px; margin-bottom:20px; border-radius:5px; }
+        h3 { margin-top:0; }
+        input, select, button { margin:5px 0; }
     </style>
 </head>
 <body>
 
 <p>Logged in as: <?= htmlspecialchars($_SESSION['user']) ?> | <a href="logout.php">Logout</a></p>
 
-<!-- ================= Product Blocks ================= -->
+<!-- ================= 1️⃣ Add Product to System ================= -->
 <div class="section">
-<h3>Products</h3>
-<?php foreach($products as $p): ?>
-<div class="product-block">
-    <strong><?= $p['name'] ?></strong><br>
-    $<?= number_format($p['price'],2) ?><br>
-    <form method="post">
-        <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
-        <input type="number" name="quantity" value="1" min="1"><br>
-        <button type="submit" name="add_to_cart">Add to Cart</button>
-    </form>
-</div>
-<?php endforeach; ?>
+<h3>Add Product to System (Dropdown)</h3>
+<form method="post">
+    <input type="text" name="system_name" placeholder="Product Name" required>
+    <input type="number" step="0.01" name="system_price" placeholder="Price" required>
+    <button type="submit" name="add_product_system">➕ Add to System</button>
+</form>
 </div>
 
-<!-- ================= Add New Product Directly to Cart ================= -->
+<!-- ================= 2️⃣ Select Product (Existing) ================= -->
+<div class="section">
+<h3>Select Product</h3>
+<form method="post">
+    <select name="product_id">
+        <?php foreach($products as $p): ?>
+        <option value="<?= $p['id'] ?>"><?= $p['name'] ?> ($<?= number_format($p['price'],2) ?>)</option>
+        <?php endforeach; ?>
+    </select>
+    <input type="number" name="quantity" value="1" min="1">
+    <button type="submit">Add to Cart</button>
+</form>
+</div>
+
+<!-- ================= 3️⃣ Add New Product Directly to Cart ================= -->
 <div class="section">
 <h3>Add New Product Directly to Cart</h3>
 <form method="post">
