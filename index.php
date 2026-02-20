@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         $products[] = ['id'=>$newId,'name'=>$name,'price'=>$price];
     }
 
-    // 2️⃣ Add product to cart (from product blocks)
+    // 2️⃣ Add product to cart from product blocks
     if (isset($_POST['product_id'], $_POST['quantity'])) {
         $id = (int)$_POST['product_id'];
         $qty = max(1,(int)$_POST['quantity']);
@@ -87,22 +87,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         }
     }
 
-    // 3️⃣ Add new product manually to cart
-    if (isset($_POST['add_new_product'])){
-        $name = trim($_POST['new_name']);
-        $price = (float)$_POST['new_price'];
-        $qty = max(1,(int)$_POST['new_qty']);
-        $newId = time() + rand(1,1000); // unique ID for cart item
-        $_SESSION['cart'][] = [
-            'id'=>$newId,
-            'name'=>$name,
-            'price'=>$price,
-            'qty'=>$qty,
-            'total'=>$price*$qty
-        ];
-    }
-
-    // 4️⃣ Clear cart
+    // 3️⃣ Clear cart
     if(isset($_POST['clear_cart'])) $_SESSION['cart'] = [];
 }
 
@@ -155,17 +140,6 @@ $<?= number_format($p['price'],2) ?><br>
 </div>
 <?php endforeach; ?>
 </div>
-</div>
-
-<!-- ================= 3️⃣ Add New Product to Cart ================= -->
-<div class="section">
-<h3>Add New Product to Cart</h3>
-<form method="post">
-<input type="text" name="new_name" placeholder="Product Name" required>
-<input type="number" step="0.01" name="new_price" placeholder="Price" required>
-<input type="number" name="new_qty" value="1" min="1" required>
-<button type="submit" name="add_new_product">➕ Add to Cart</button>
-</form>
 </div>
 
 <!-- ================= Cart / Receipt ================= -->
