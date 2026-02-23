@@ -2,76 +2,337 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration & Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/fontawesome.min.css" integrity="sha512-B46MVOJpI6RBsdcU307elYeStF2JKT87SsHZfRSkjVi4/iZ3912zXi45X5/CBr/GbCyLx6M1GQtTKYRd52Jxgw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/loginRegister.css">
+    <title>Caffeine-Corner</title>
+    <link rel="icon" href="/assest/icon/icons8-coffee-shop-64.png">
+    <link rel="stylesheet" href="/css/Dashboard.css">
+    <link rel="stylesheet" href="/css/Customer.css">
+    <link rel="stylesheet" href="/css/Products.css">
+    <link rel="stylesheet" href="/css/Orders.css">
+
 </head>
 <body>
-    <div class="container" id="ContainerForm">
-        
-        <div id="toast" class="toast">
-            <span id="toast-message"></span>
+    <div id="container" class="container">
+        <!-- ------------------------------------ Navgation Side Bar ------------------------------------ -->
+        <div id="navigation" class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon"><img src="/assest/image/DashBoard Logo.png" class="logo"></span>
+                        <span class="title" style="font-size: 1.5em;font-weight: 500; margin-top: 15px;">Caffeine Corner</span>
+                    </a>
+                </li>
+                <li class="hovered">
+					<a href="#" id="Dashboard-button">
+						<span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+						<span class="title">Dashboard</span>
+					</a>
+				</li>
+                <li>
+					<a href="#" id="CustomerForm-button">
+						<span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+						<span class="title" >Customers</span>
+					</a>
+				</li>
+                <li>
+					<a href="#" id="ProductsForm-button">
+						<span class="icon"><ion-icon name="color-fill-outline"></ion-icon></span>
+						<span class="title">Products</span>
+					</a>
+				</li>
+                <li>
+					<a href="#" id="OrdersForm-button">
+						<span class="icon"><ion-icon name="reader-outline"></ion-icon></span>
+						<span class="title">Orders</span>
+					</a>
+				</li>
+                <li>
+					<a href="#">
+						<span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+						<span class="title">Settings</span>
+					</a>
+				</li>
+                <li>
+					<a href="#">
+						<span class="icon"><ion-icon name="help-outline"></ion-icon></span>
+						<span class="title">Help</span>
+					</a>
+				</li>
+                <li>
+					<a href="#" id="SignOutForm-button">
+						<span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+						<span class="title">Sign Out</span>
+					</a>
+				</li>
+            </ul>
         </div>
 
-        <div class="form-container register-container">
-            <form id="register-form">
-                <h1 class="heading">Create Account</h1>
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <button type="submit" id="reg">Register</button>
-            </form>
-        </div>
+        <div class="main">
+            <!-- ------------------------------------ Dashboard Form ------------------------------------ -->
+            <section id="DashboardForm">
+                <div class="topbar">
+                    <div class="toggle">
+                        <ion-icon name="menu-outline"></ion-icon>
+                    </div>
+                    <!-- search -->
+                    <div class="search">
+                        <label>
+                            <input type="text" placeholder="Search here">
+                            <ion-icon name="search-outline"></ion-icon>
+                        </label>
+                    </div>
+                    <!-- userImg -->
+                    <div class="user">
+                        <img src="/assest/image/User Image.jpg">
+                    </div>
 
-        <div class="form-container signin-container">
-            <form id="login-form">
-                <h1 class="heading">Sign in</h1>
-                <input type="email" id="email-login" placeholder="Email" required>
-                <input type="password" id="password-login" placeholder="Password" required>
-                <a href="#">Forgot your password?</a>
-                <button type="button" id="log">Sign in</button>
-            </form>
-        </div>
-
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <h1>Welcome Back!</h1>
-                    <p>
-                        To keep connected with us please login with your personal info
-                    </p>
-                    <button class="ghost" id="signIn1">Sign in</button>
                 </div>
-                <div class="overlay-panel overlay-right">
-                    <h1>Hello, Admin!</h1>
-                    <p>Enter your personal details and start your journey with us</p>
-                    <button class="ghost" id="register">Register</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="loadingOverlay" class="loading-overlay">
-        <div class="loader"></div>
-    </div>
     
-    <script>
-        const registerButton1 = document.getElementById("register");
-        const signInButton = document.getElementById("signIn1");
-        const container = document.getElementById("ContainerForm");
+                <div class="cardBox">
+                    <div class="card" id="customer">
+                        <div>
+                            <div class="numbers">10</div>
+                            <div class="cardName">Customers</div>
+                        </div>
+                        <div class="iconBx">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="card" id="product">
+                        <div>
+                            <div class="numbers">12</div>
+                            <div class="cardName">Products</div>
+                        </div>
+                        <div class="iconBx">
+                            <ion-icon name="color-fill-outline"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="card" id="orders">
+                        <div>
+                            <div class="numbers">227</div>
+                            <div class="cardName">Orders</div>
+                        </div>
+                        <div class="iconBx">
+                            <ion-icon name="reader-outline"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">4</div>
+                            <div class="cardName">Employees</div>
+                        </div>
+                        <div class="iconBx">
+                            <ion-icon name="accessibility-outline"></ion-icon>
+                        </div>
+                    </div>    
+                </div>
+    
+                <div class="charts">
+                    <div class="charts-card">
+                      <h2 class="chart-title">Top 5 Products</h2>
+                      <div id="bar-chart"></div>
+                    </div>
+          
+                    <div class="charts-card">
+                      <h2 class="chart-title">Beverages & Desserts</h2>
+                      <div id="area-chart"></div>
+                    </div>
+                </div>
+            </section>
 
-        registerButton1.addEventListener("click", () => {
-            container.classList.add("right-panel-active");
-        });
+            <!-- ------------------------------------ Customer Form ------------------------------------ -->
+            <section id="CustomerForm">
+                <div id="customerHeaderSection" class="customerHeader-section">
+                    <h2> Customer <span>Manage</span></h2>
+                    <button id="add-customer" class="add-customer-button">Add Customer</button>
+                </div>
 
-        signInButton.addEventListener("click", () => {
-            container.classList.remove("right-panel-active");
-        });
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.13.0/firebase-auth.js"></script>
-    <script type="module" src="/js/loginRegister.js"></script>
+                <!-- -------------- Add Customer Form -------------- -->
+                <div id="customerRegisterForm" class="customerRegisterForm">
+                    <div class="registerForm">
+                        <span id="customerRegisterForm-close" class="customer-close">&times;</span>
+                        <h2 id="registerTitle">Register Customer</h2>
+                        <img src="/assest/image/CustomerRegisterForm.png">
+
+                        <form id="customer-form" class="customer-form">
+                            <div class="customer-form-row">
+                                <input type="text" id="customerID" name="customerID" placeholder="Customer ID" required>
+                            </div>
+
+                            <div class="customer-form-row">
+                                <input type="text" id="customerName" name="customerName" placeholder="Full Name" required>
+                            </div>
+
+                            <div class="customer-form-row">
+                                <input type="text" id="customerAddress" name="customerAddress" placeholder="Address" required>
+                            </div>
+
+                            <div class="customer-form-row">
+                                <input type="text" id="customerNumber" name="customerNumber" placeholder="Mobile Number" required>
+                            </div>
+
+                            <button id="customer-submit" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- -------------- Customer Table -------------- -->
+                <table id="customerTable" class="customer-table"> 
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Contact Number</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="customer-table-list">
+
+                    </tbody>
+                </table>  
+            </section>
+
+            <!-- ------------------------------------ Product Form ------------------------------------ -->
+            <section id="ProductsForm">
+                <div class="productHeader-section">
+                    <h2> Products <span>Manage</span></h2>
+                    <button id="add-product" class="add-product-button">Add Product</button>
+                </div>
+
+                <!-- -------------- Add Product Form -------------- -->
+                <div id="productRegisterForm" class="productRegisterForm">
+                    <div class="RegisterForm">
+                        <span id="productRegisterForm-close" class="product-close">&times;</span>
+                        <h2 id="title">Add Product</h2>
+                        <img src="/assest/image/productRegisterForm.png" >
+
+                        <form id="product-form" class="product-form">
+                            <div class="product-form-row">
+                                <input type="text" id="productID" name="productID" placeholder="Product ID" required>
+                            </div>
+
+                            <div class="product-form-row">
+                                <input type="text" id="productName" name="productName" placeholder="Product Name" required>
+                            </div>
+
+                            <div class="product-form-row">
+                                <input type="text" id="price" name="price" placeholder="Price" required>
+                            </div>
+
+                            <div class="product-form-row">
+                                <input type="text" id="category" name="category" placeholder="Category" required>
+                            </div>
+
+                            <div class="product-form-row">
+                                <input type="text" id="quantity" name="quantity" placeholder="Quantity" required>
+                            </div>
+
+                            <button id="product-submit" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- -------------- Product Table -------------- -->
+                <table id="productTable" class="product-table"> 
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="product-table-list">
+
+                    </tbody>
+                </table>
+
+            </section>
+            
+            <!-- ------------------------------------ Order Form ------------------------------------ -->
+            <section id="OrdersForm" class="OrdersForm">
+                <h2 class="FormTitle"> Orders <span>Manage</span></h2>
+
+                <div class="OrderFields">
+                    <div class="OrdersHeader-section">
+                        <h2 class="menu">Menu</h2>
+                        <div class="order-items" id="order-items">
+                            <!-- Order items will be injected here by JavaScript -->
+                        </div>
+                    </div>
+    
+                    <div class="cart-section">
+                        <div class="title-orderHeader-contianer">
+                            <h2 class="order-title">Place Order</h2>
+                            <h4 id="current-date" class="date">1 August 2024</h4>
+                        </div>
+    
+                        <h3 id="order-id">Order ID: 1</h3>
+                        
+                        <div class="customer-select-container">
+                            <select id="customerDropDown" class="customer-select">
+                                <option value="">Select Customer</option>
+                            </select>
+                            <!-- <p id="name-holder">Name:</p> -->
+                        </div>
+    
+                        <div class="order-item-cart">
+                            <div class="cart-items" id="cart-items">
+                                <!--  injected here by JavaScript -->
+                            </div>
+                            <div class="order-total">
+                                <p>Sub Total: <span id="sub-total">Rs 0.00</span></p>
+                                <p>Total: <span id="total">Rs 0.00</span></p>
+                                <p>Balance: <span id="balance">Rs 0.00</span></p>
+                            </div> 
+    
+                            <div class="order-row">
+                                <div>
+                                    <label for="cash">Cash</label>
+                                    <input type="text" id="cash">
+                                </div>
+    
+                                <div>
+                                    <label for="discount">Discount</label>
+                                    <input type="text" id="discount">
+                                </div>
+                            </div>
+                            <button id="purchase">Purchase</button>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <div id="toast" class="toast"></div>
+
+
+        </div>    
+
+        
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.51.0/apexcharts.min.js"></script>
+
+    <script src="/db/db.js"></script>
+    <script src="/js/Dashboard.js"></script>
+    <script src="/js/Navigation.js"></script>
+    <script src="/js/Customer.js"></script>
+    <script src="/js/Products.js"></script>
+    <script src="/js/Orders.js"></script>
+    
+
 </body>
 </html>
