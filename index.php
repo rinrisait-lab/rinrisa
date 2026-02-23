@@ -43,6 +43,8 @@ if (!isset($_SESSION['products'])) {
         ['id'=>3,'name'=>'Coka','price'=>0.50],
         ['id'=>3,'name'=>'cake','price'=>10.50]
     ];
+    header('Location: index.php');
+    exit;
 }
 
 $products = &$_SESSION['products'];
@@ -100,10 +102,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 }
 
 $cart = $_SESSION['cart'];
+$invoices = array_reverse(getInvoices());
 ?>
 
 <!DOCTYPE html>
 <html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>POS System BUTHMAIYA</title>
@@ -117,6 +121,10 @@ input, select, button{margin:5px 0;}
 table{border-collapse:collapse;width:50%;margin-top:20px;}
 th, td{border:1px solid #ccc;padding:5px;text-align:center;}
 </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoices - Coffee POS</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -145,6 +153,38 @@ $<?= number_format($p['price'],2) ?><br>
 <input type="number" name="quantity" value="1" min="1"><br>
 <button type="submit">Add to Cart</button>
 </form>
+<div class="layout">
+    <header class="topbar">
+        <h1>🧾 Saved Invoices</h1>
+        <a href="index.php" class="link-btn">Back to POS</a>
+    </header>
+
+    <section class="card">
+        <?php if (empty($invoices)): ?>
+            <p>No invoice yet.</p>
+        <?php else: ?>
+            <?php foreach ($invoices as $invoice): ?>
+                <article class="invoice">
+                    <h3>Invoice #<?= (int)$invoice['id'] ?></h3>
+                    <p>Date: <?= htmlspecialchars($invoice['date']) ?> <?= htmlspecialchars($invoice['time']) ?> | Cashier: <?= htmlspecialchars($invoice['cashier']) ?></p>
+                    <table>
+                        <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+                        <tbody>
+                        <?php foreach ($invoice['items'] as $item): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($item['name']) ?></td>
+                                <td><?= (int)$item['qty'] ?></td>
+                                <td><?= formatMoney((float)$item['price']) ?></td>
+                                <td><?= formatMoney((float)$item['total']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                        <tfoot><tr><td colspan="3">Grand Total</td><td><?= formatMoney((float)$invoice['grand_total']) ?></td></tr></tfoot>
+                    </table>
+                </article>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </section>
 </div>
 <?php endforeach; ?>
 </div>
