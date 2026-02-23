@@ -1,40 +1,149 @@
 /* ===== General Styles ===== */
+:root {
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --line: #d9deea;
+    --text: #1e2430;
+    --muted: #6d778a;
+    --brand: #7b4b2a;
+    --brand-dark: #60381e;
+    --danger: #bf3e3e;
+    --success: #2f8f4e;
+}
+
+* { box-sizing: border-box; }
+
 body {
     font-family: monospace;
     background: #f5f5f5;
     padding: 20px;
     text-align: center; /* horizontal center for receipt */
+    margin: 0;
+    font-family: Inter, Segoe UI, Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
 }
 
 #receipt {
     width: 80mm;                /* receipt printer width */
     margin: 20mm auto 0 auto;   /* top spacing + center horizontally */
     background: #fff;
+.layout {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 14px 30px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+h1, h2, h3 { margin: 0 0 10px; }
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 6px 18px rgba(20, 38, 70, 0.06);
+}
+
+.grid { display: grid; gap: 14px; }
+.report-cards { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); margin-bottom: 14px; }
+.two-col { grid-template-columns: 1.2fr 1fr; align-items: start; margin-bottom: 14px; }
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.product-item {
+    border: 1px solid var(--line);
+    border-radius: 10px;
     padding: 10px;
     text-align: left;
     font-size: 12pt;
     border: 1px solid #ccc;
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    display: grid;
+    gap: 6px;
 }
 
 #receipt h2 {
     text-align: center;
     margin-bottom: 10px;
+small { color: var(--muted); }
+
+input, select, button {
+    width: 100%;
+    padding: 9px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    font-size: 14px;
+}
+
+button {
+    background: var(--brand);
+    color: #fff;
+    border: none;
+    cursor: pointer;
 }
 
 #receipt table {
+button:hover { background: var(--brand-dark); }
+
+button.danger { background: var(--danger); }
+
+.stack { display: grid; gap: 8px; }
+.inline { display: flex; gap: 6px; align-items: center; }
+.actions { display: flex; gap: 10px; margin-top: 12px; }
+.actions form { flex: 1; }
+.hidden { display: none; }
+
+table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 8px;
 }
+th, td {
+    border-bottom: 1px solid var(--line);
+    padding: 8px;
+    text-align: left;
+}
+
+.warn { color: #d16d00; font-weight: 700; }
 
 #receipt th, #receipt td {
     border-bottom: 1px solid #000;
     padding: 4px 0;
+.alert {
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border: 1px solid;
 }
+.alert.error { color: #7f1f1f; background: #ffdede; border-color: #f1b0b0; }
+.alert.success { color: #1f6a38; background: #ddf7e5; border-color: #98dbb0; }
 
 #receipt tfoot td {
     font-weight: bold;
     border-top: 2px solid #000;
+.link-btn {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    margin-left: 8px;
 }
 
 button {
@@ -42,6 +151,29 @@ button {
     padding: 8px 20px;
     font-size: 14px;
     cursor: pointer;
+.login-body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+}
+
+.login-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    padding: 22px;
+    width: min(420px, 96vw);
+    box-shadow: 0 14px 35px rgba(14, 24, 42, 0.11);
+}
+
+.error { color: #a12a2a; }
+
+.invoice {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
 }
 
 /* ===== Print Styles ===== */
@@ -60,4 +192,6 @@ button {
         size: 80mm auto;
         margin: 0;
     }
+@media (max-width: 960px) {
+    .two-col { grid-template-columns: 1fr; }
 }
