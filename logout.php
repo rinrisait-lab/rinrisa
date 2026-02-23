@@ -1,5 +1,8 @@
 <?php
 session_start();
-session_destroy();
-header("Location: index.php");
+require 'functions.php'; // include functions file
+
+logout(); // remove session
+header("Location: index.php"); // redirect to login page
 exit;
+?>
