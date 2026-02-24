@@ -71,10 +71,7 @@ $cart = $_SESSION['cart'];
 <head>
 <meta charset="UTF-8">
 <title>BUTHMAIYA MART POS</title>
-
-<!-- ✅ External CSS Only -->
 <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
@@ -85,14 +82,17 @@ $cart = $_SESSION['cart'];
 
 <h3>Products</h3>
 
-<div style="text-align:center;">
+<!-- ✅ Correct Container -->
+<div class="products-container">
 <?php foreach($products as $p): ?>
 <div class="product-box">
     <form method="post">
         <strong><?= htmlspecialchars($p['name']) ?></strong><br>
-        $<?= number_format($p['price'],2) ?><br><br>
+        $<?= number_format($p['price'],2) ?><br>
+
         <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
         <input type="number" name="quantity" value="1" min="1"><br>
+
         <button type="submit">Add</button>
     </form>
 </div>
@@ -133,15 +133,13 @@ $grand += $item['total'];
 </tr>
 </table>
 
-<br>
-
-<div style="text-align:center;">
+<div class="actions">
     <a href="invoices.php" target="_blank">
-        <button type="button">Receipt Print</button>
+        <button type="button" class="print-btn">Receipt Print</button>
     </a>
 
     <form method="post" style="display:inline;">
-        <button type="submit" name="clear">Clear Cart</button>
+        <button type="submit" name="clear" class="clear-btn">Clear Cart</button>
     </form>
 </div>
 
