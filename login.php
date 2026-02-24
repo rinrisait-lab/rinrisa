@@ -1,22 +1,16 @@
 <?php
-session_start();
-require 'config.php';
+require 'functions.php';
+
+if (isLoggedIn()) {
+    header("Location: index.php");
+    exit;
+}
 
 $error = '';
 
 if (isset($_POST['login'])) {
 
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = md5($_POST['password']);
-
-    $query = mysqli_query($conn,
-        "SELECT * FROM users WHERE username='$username' AND password='$password'"
-    );
-
-    if (mysqli_num_rows($query) > 0) {
-        $user = mysqli_fetch_assoc($query);
-        $_SESSION['user'] = $user['username'];
-
+    if (login($_POST['username'], $_POST['password'])) {
         header("Location: index.php");
         exit;
     } else {
