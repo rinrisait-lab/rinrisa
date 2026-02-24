@@ -1,170 +1,105 @@
-/* ===== GLOBAL ===== */
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg,#eef2ff,#f8fafc);
+    background: #2c2f33;
 }
 
-/* ===== HEADER ===== */
-.top-center {
-    text-align: center;
-    padding: 35px 0;
-    background: linear-gradient(135deg,#3b82f6,#2563eb);
+/* TOP MENU */
+.top-menu {
+    background: #1f2226;
     color: white;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-}
-
-.top-center h2 {
-    margin: 0;
-    font-size: 28px;
-    letter-spacing: 1px;
-}
-
-.logout-btn {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 8px 18px;
-    background: white;
-    color: #2563eb;
-    border-radius: 30px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.logout-btn:hover {
-    background: #f1f5ff;
-}
-
-/* ===== SECTION TITLE ===== */
-h3 {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 24px;
-    font-weight: 600;
-    color: #1f2937;
-}
-
-/* ===== PRODUCTS GRID ===== */
-.products-container {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 30px;
-    margin: 40px auto;
-    max-width: 1100px;
+    padding: 12px 20px;
+    gap: 25px;
+    font-weight: 500;
 }
 
-.product-box {
-    background: rgba(255,255,255,0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 18px;
-    padding: 25px;
-    width: 220px;
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-    transition: 0.3s ease;
+.top-menu a {
+    color: #ff6b6b;
+    text-decoration: none;
+    margin-left: 10px;
 }
 
-.product-box:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+/* MAIN CONTAINER */
+.pos-container {
+    display: flex;
+    height: calc(100vh - 50px);
 }
 
-.product-box strong {
-    font-size: 20px;
-    display: block;
-    margin-bottom: 8px;
+/* LEFT PANEL */
+.order-panel {
+    width: 30%;
+    background: #ffffff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
-.product-box input {
-    width: 70px;
-    padding: 6px;
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
-    margin-right: 8px;
+.order-panel h3 {
+    margin-top: 0;
 }
 
-.product-box button {
-    padding: 6px 14px;
-    border-radius: 8px;
-    border: none;
-    background: linear-gradient(135deg,#3b82f6,#2563eb);
-    color: white;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
 }
 
-.product-box button:hover {
-    transform: scale(1.05);
-}
-
-/* ===== CART TABLE ===== */
-table {
-    width: 85%;
-    margin: 40px auto;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-}
-
-th {
-    background: linear-gradient(135deg,#3b82f6,#2563eb);
-    color: white;
-    padding: 14px;
-    font-weight: 600;
-}
-
-td {
-    padding: 12px;
-    text-align: center;
-    font-size: 15px;
-}
-
-tr:nth-child(even) {
-    background: #f9fafb;
-}
-
-tr:last-child td {
+.order-total {
+    margin-top: auto;
+    font-size: 22px;
     font-weight: bold;
-    background: #eef2ff;
+    padding-top: 15px;
 }
 
-/* ===== ACTION BUTTONS ===== */
-.actions {
-    text-align: center;
-    margin-bottom: 50px;
+/* PAYMENT BUTTONS */
+.payment-buttons {
+    margin-top: 20px;
+    display: grid;
+    gap: 10px;
 }
 
-.actions button {
-    padding: 10px 22px;
-    border-radius: 12px;
+.payment-buttons button {
+    padding: 10px;
     border: none;
+    border-radius: 6px;
     cursor: pointer;
-    font-weight: 600;
-    margin: 8px;
-    font-size: 15px;
-    transition: 0.3s;
-}
-
-.print-btn {
-    background: linear-gradient(135deg,#10b981,#059669);
     color: white;
 }
 
-.print-btn:hover {
-    transform: translateY(-3px);
+.cash { background: #3498db; }
+.card { background: #2ecc71; }
+.print { background: #f39c12; }
+.clear { background: #e74c3c; }
+
+/* RIGHT PRODUCTS */
+.product-panel {
+    width: 70%;
+    background: #3a3f44;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 30px;
 }
 
-.clear-btn {
-    background: linear-gradient(135deg,#ef4444,#dc2626);
+.product-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+}
+
+.product-card input {
+    width: 60px;
+    margin: 10px 0;
+}
+
+.product-card button {
+    background: #3498db;
+    border: none;
+    padding: 6px 12px;
     color: white;
-}
-
-.clear-btn:hover {
-    transform: translateY(-3px);
+    border-radius: 5px;
+    cursor: pointer;
 }
