@@ -1,59 +1,118 @@
+<?php
+session_start();
+require 'functions.php';
+
+if (!isLoggedIn()) {
+    header("Location: login.php");
+    exit;
+}
+
+$cart = $_SESSION['cart'] ?? [];
+
+if (empty($cart)) {
+    echo "<h3 style='text-align:center;margin-top:50px;'>Cart is empty!</h3>";
+    exit;
+}
+
+$grand = 0;
+foreach ($cart as $item) {
+    $grand += $item['total'];
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Receipt</title>
+
 <style>
 body {
-    font-family: 'Courier New', monospace;
-    background: #fff;
-    margin: 0;
+    font-family: monospace;
+    background: #f5f5f5;
 }
 
 #receipt {
-    width: 280px;
-    margin: auto;
-    padding: 10px;
-    font-size: 13px;
+    width: 320px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
-.header { text-align: center; }
+.header {
+    text-align: center;
+}
 
 .store-name {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
 }
 
-.small { font-size: 12px; }
+.small {
+    font-size: 13px;
+}
 
 hr {
     border: none;
     border-top: 1px dashed #000;
-    margin: 6px 0;
+    margin: 10px 0;
 }
 
 table {
     width: 100%;
-    font-size: 13px;
-    border-collapse: collapse;
+    font-size: 14px;
 }
 
-td { padding: 3px 0; }
+td {
+    padding: 4px 0;
+}
 
-.right { text-align: right; }
+.right {
+    text-align: right;
+}
 
 .total-box {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
 }
 
 .footer {
     text-align: center;
-    font-size: 12px;
-    margin-top: 8px;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+button {
+    padding: 6px 12px;
+    margin-top: 10px;
+    cursor: pointer;
 }
 
 @media print {
-    body { margin: 0; }
-    #receipt { width: 100%; }
-    button { display: none; }
+    body {
+        background: #fff;
+    }
+    #receipt {
+        box-shadow: none;
+        margin: 0;
+        width: 100%;
+    }
+    button {
+        display: none;
+    }
 }
 </style>
+
+<script>
+window.onload = function(){
+    window.print();
+};
+</script>
+
+</head>
+<body>
+
 <div id="receipt">
 
 <div class="header">
@@ -93,3 +152,10 @@ Please Come Again
 </div>
 
 </div>
+
+<div style="text-align:center;">
+<button onclick="window.print()">Print Again</button>
+</div>
+
+</body>
+</html>
