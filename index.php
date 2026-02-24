@@ -72,42 +72,9 @@ $cart = $_SESSION['cart'];
 <meta charset="UTF-8">
 <title>BUTHMAIYA MART POS</title>
 
-<!-- ✅ Link External CSS -->
+<!-- ✅ External CSS Only -->
 <link rel="stylesheet" href="style.css">
 
-<style>
-body { font-family: Arial; }
-
-.product-box {
-    display:inline-block;
-    border:1px solid #ccc;
-    padding:10px;
-    margin:10px;
-    width:150px;
-    text-align:center;
-}
-
-table { 
-    border-collapse: collapse; 
-    width:70%; 
-    margin: auto;
-}
-
-table, th, td { 
-    border:1px solid #000; 
-}
-
-th, td { 
-    padding:8px; 
-    text-align:center; 
-}
-
-button { 
-    padding:6px 12px; 
-    margin-top:5px; 
-    cursor:pointer; 
-}
-</style>
 </head>
 <body>
 
@@ -116,24 +83,26 @@ button {
     <a href="logout.php" class="logout-btn">Logout</a>
 </div>
 
-<h3 style="text-align:center;">Products</h3>
+<h3>Products</h3>
 
+<div style="text-align:center;">
 <?php foreach($products as $p): ?>
 <div class="product-box">
     <form method="post">
         <strong><?= htmlspecialchars($p['name']) ?></strong><br>
         $<?= number_format($p['price'],2) ?><br><br>
         <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
-        <input type="number" name="quantity" value="1" min="1" style="width:60px;"><br>
+        <input type="number" name="quantity" value="1" min="1"><br>
         <button type="submit">Add</button>
     </form>
 </div>
 <?php endforeach; ?>
+</div>
 
 <hr>
 
 <?php if($cart): ?>
-<h3 style="text-align:center;">Cart</h3>
+<h3>Cart</h3>
 
 <table>
 <tr>
