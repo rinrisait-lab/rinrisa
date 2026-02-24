@@ -146,7 +146,7 @@ $grand += $item['total'];
 
 <!-- ✅ CHECKOUT OPEN NEW TAB -->
 <a href="invoices.php" target="_blank">
-    <button type="button">Checkout</button>
+    <button type="button">Receipt print</button>
 </a>
 
 <form method="post" style="display:inline;">
