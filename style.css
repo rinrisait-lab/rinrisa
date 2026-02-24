@@ -2,143 +2,169 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: #f4f6fb;
+    background: linear-gradient(135deg,#eef2ff,#f8fafc);
 }
 
 /* ===== HEADER ===== */
 .top-center {
     text-align: center;
-    padding: 30px 0;
-    background: linear-gradient(135deg,#4e73df,#224abe);
+    padding: 35px 0;
+    background: linear-gradient(135deg,#3b82f6,#2563eb);
     color: white;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
 .top-center h2 {
     margin: 0;
+    font-size: 28px;
+    letter-spacing: 1px;
 }
 
 .logout-btn {
     display: inline-block;
-    margin-top: 10px;
-    padding: 6px 15px;
+    margin-top: 12px;
+    padding: 8px 18px;
     background: white;
-    color: #224abe;
-    border-radius: 20px;
+    color: #2563eb;
+    border-radius: 30px;
     text-decoration: none;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
 }
 
-/* ===== TITLES ===== */
+.logout-btn:hover {
+    background: #f1f5ff;
+}
+
+/* ===== SECTION TITLE ===== */
 h3 {
     text-align: center;
-    margin-top: 30px;
-    font-size: 22px;
+    margin-top: 40px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1f2937;
 }
 
-/* ===== PRODUCTS ===== */
+/* ===== PRODUCTS GRID ===== */
 .products-container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 20px;
+    gap: 30px;
+    margin: 40px auto;
+    max-width: 1100px;
 }
 
 .product-box {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    width: 200px;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    padding: 25px;
+    width: 220px;
     text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    transition: 0.3s;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
 }
 
 .product-box:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.15);
 }
 
 .product-box strong {
-    font-size: 18px;
+    font-size: 20px;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .product-box input {
     width: 70px;
-    padding: 5px;
-    margin-top: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    margin-right: 8px;
 }
 
 .product-box button {
-    margin-top: 10px;
-    padding: 6px 12px;
-    border-radius: 6px;
+    padding: 6px 14px;
+    border-radius: 8px;
     border: none;
-    background: #4e73df;
+    background: linear-gradient(135deg,#3b82f6,#2563eb);
     color: white;
     cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
 }
 
-/* ===== CART ===== */
+.product-box button:hover {
+    transform: scale(1.05);
+}
+
+/* ===== CART TABLE ===== */
 table {
-    width: 80%;
-    margin: 30px auto;
+    width: 85%;
+    margin: 40px auto;
     border-collapse: collapse;
     background: white;
-    border-radius: 10px;
+    border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
 }
 
 th {
-    background: #4e73df;
+    background: linear-gradient(135deg,#3b82f6,#2563eb);
     color: white;
-    padding: 12px;
+    padding: 14px;
+    font-weight: 600;
 }
 
 td {
-    padding: 10px;
+    padding: 12px;
     text-align: center;
+    font-size: 15px;
 }
 
 tr:nth-child(even) {
-    background: #f8f9fc;
+    background: #f9fafb;
+}
+
+tr:last-child td {
+    font-weight: bold;
+    background: #eef2ff;
 }
 
 /* ===== ACTION BUTTONS ===== */
 .actions {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
 .actions button {
-    padding: 8px 18px;
-    border-radius: 8px;
+    padding: 10px 22px;
+    border-radius: 12px;
     border: none;
     cursor: pointer;
     font-weight: 600;
-    margin: 5px;
+    margin: 8px;
+    font-size: 15px;
+    transition: 0.3s;
 }
 
 .print-btn {
-    background: #1cc88a;
+    background: linear-gradient(135deg,#10b981,#059669);
     color: white;
+}
+
+.print-btn:hover {
+    transform: translateY(-3px);
 }
 
 .clear-btn {
-    background: #e74a3b;
+    background: linear-gradient(135deg,#ef4444,#dc2626);
     color: white;
 }
 
-/* ===== DIVIDER ===== */
-hr {
-    width: 80%;
-    margin: 40px auto;
-    border: none;
-    height: 1px;
-    background: #ddd;
+.clear-btn:hover {
+    transform: translateY(-3px);
 }
