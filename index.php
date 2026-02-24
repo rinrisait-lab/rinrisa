@@ -2,6 +2,7 @@
 session_start();
 require 'functions.php';
 
+/* LOGIN CHECK */
 if (!isLoggedIn()) {
     header("Location: login.php");
     exit;
@@ -19,6 +20,7 @@ if (!isset($_SESSION['products'])) {
 
 $products = $_SESSION['products'];
 
+/* INIT CART */
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
@@ -45,11 +47,11 @@ if (isset($_POST['product_id'])) {
 
             if (!$found) {
                 $_SESSION['cart'][] = [
-                    'id'=>$p['id'],
-                    'name'=>$p['name'],
-                    'price'=>$p['price'],
-                    'qty'=>$qty,
-                    'total'=>$p['price']*$qty
+                    'id'    => $p['id'],
+                    'name'  => $p['name'],
+                    'price' => $p['price'],
+                    'qty'   => $qty,
+                    'total' => $p['price'] * $qty
                 ];
             }
 
@@ -58,6 +60,7 @@ if (isset($_POST['product_id'])) {
     }
 }
 
+/* CLEAR CART */
 if (isset($_POST['clear'])) {
     $_SESSION['cart'] = [];
 }
@@ -83,7 +86,7 @@ body { font-family: Arial; }
 table { border-collapse: collapse; width:70%; }
 table, th, td { border:1px solid #000; }
 th, td { padding:8px; text-align:center; }
-button { padding:5px 10px; margin-top:5px; }
+button { padding:5px 10px; margin-top:5px; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -143,11 +146,12 @@ $grand += $item['total'];
 
 <br>
 
-<!-- CHECKOUT BUTTON (LINK METHOD) -->
+<!-- ✅ CHECKOUT (LINK METHOD - WILL CHANGE PAGE) -->
 <a href="invoices.php">
     <button type="button">Checkout</button>
 </a>
 
+<!-- CLEAR CART -->
 <form method="post" style="display:inline;">
     <button type="submit" name="clear">Clear Cart</button>
 </form>
