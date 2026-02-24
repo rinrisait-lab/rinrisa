@@ -17,7 +17,7 @@ CREATE TABLE users (
 );
 
 INSERT INTO users(name,username,password,role)
-VALUES('Admin','admin',MD5('123'),'admin');
+VALUES('Admin','risa',MD5('admin2323'),'admin');
 
 CREATE TABLE suppliers (
     id INT AUTO_INCREMENT PRIMARY KEY,
