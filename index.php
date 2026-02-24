@@ -80,70 +80,77 @@ $cart = $_SESSION['cart'];
     <a href="logout.php" class="logout-btn">Logout</a>
 </div>
 
-<h3>Products</h3>
+<div class="main-container">
 
-<!-- ✅ Correct Container -->
-<div class="products-container">
-<?php foreach($products as $p): ?>
-<div class="product-box">
-    <form method="post">
-        <strong><?= htmlspecialchars($p['name']) ?></strong><br>
-        $<?= number_format($p['price'],2) ?><br>
+    <!-- LEFT: PRODUCTS -->
+    <div class="left-side">
+        <h3>Products</h3>
+        <div class="products-container">
+            <?php foreach($products as $p): ?>
+            <div class="product-box">
+                <form method="post">
+                    <strong><?= htmlspecialchars($p['name']) ?></strong>
+                    <div class="price">$<?= number_format($p['price'],2) ?></div>
 
-        <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
-        <input type="number" name="quantity" value="1" min="1"><br>
+                    <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
+                    <input type="number" name="quantity" value="1" min="1">
 
-        <button type="submit">Add</button>
-    </form>
+                    <button type="submit">Add</button>
+                </form>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- RIGHT: CART -->
+    <div class="right-side">
+        <h3>Cart</h3>
+
+        <?php if($cart): ?>
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Total</th>
+            </tr>
+
+            <?php 
+            $grand = 0;
+            foreach($cart as $i=>$item):
+            $grand += $item['total'];
+            ?>
+            <tr>
+                <td><?= $i+1 ?></td>
+                <td><?= htmlspecialchars($item['name']) ?></td>
+                <td><?= $item['qty'] ?></td>
+                <td>$<?= number_format($item['total'],2) ?></td>
+            </tr>
+            <?php endforeach; ?>
+
+            <tr class="grand-total">
+                <td colspan="3">Grand Total</td>
+                <td>$<?= number_format($grand,2) ?></td>
+            </tr>
+        </table>
+
+        <div class="actions">
+            <a href="invoices.php" target="_blank">
+                <button type="button" class="print-btn">Receipt</button>
+            </a>
+
+            <form method="post" style="display:inline;">
+                <button type="submit" name="clear" class="clear-btn">Clear</button>
+            </form>
+        </div>
+
+        <?php else: ?>
+            <p style="text-align:center;">Cart is empty</p>
+        <?php endif; ?>
+
+    </div>
+
 </div>
-<?php endforeach; ?>
-</div>
-
-<hr>
-
-<?php if($cart): ?>
-<h3>Cart</h3>
-
-<table>
-<tr>
-<th>#</th>
-<th>Product</th>
-<th>Qty</th>
-<th>Price</th>
-<th>Total</th>
-</tr>
-
-<?php 
-$grand = 0;
-foreach($cart as $i=>$item):
-$grand += $item['total'];
-?>
-<tr>
-<td><?= $i+1 ?></td>
-<td><?= htmlspecialchars($item['name']) ?></td>
-<td><?= $item['qty'] ?></td>
-<td>$<?= number_format($item['price'],2) ?></td>
-<td>$<?= number_format($item['total'],2) ?></td>
-</tr>
-<?php endforeach; ?>
-
-<tr>
-<td colspan="4"><strong>Grand Total</strong></td>
-<td><strong>$<?= number_format($grand,2) ?></strong></td>
-</tr>
-</table>
-
-<div class="actions">
-    <a href="invoices.php" target="_blank">
-        <button type="button" class="print-btn">Receipt Print</button>
-    </a>
-
-    <form method="post" style="display:inline;">
-        <button type="submit" name="clear" class="clear-btn">Clear Cart</button>
-    </form>
-</div>
-
-<?php endif; ?>
 
 </body>
 </html>
