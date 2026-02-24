@@ -2,13 +2,12 @@
 session_start();
 require 'functions.php';
 
-/* ================= LOGIN CHECK ================= */
 if (!isLoggedIn()) {
     header("Location: login.php");
     exit;
 }
 
-/* ================= SAMPLE PRODUCTS ================= */
+/* SAMPLE PRODUCTS */
 if (!isset($_SESSION['products'])) {
     $_SESSION['products'] = [
         ['id'=>1,'name'=>'Tea','price'=>2.50],
@@ -18,13 +17,13 @@ if (!isset($_SESSION['products'])) {
     ];
 }
 
-$products = &$_SESSION['products'];
+$products = $_SESSION['products'];
 
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
-/* ================= ADD TO CART ================= */
+/* ADD TO CART */
 if (isset($_POST['product_id'])) {
 
     $id  = (int)$_POST['product_id'];
@@ -46,11 +45,11 @@ if (isset($_POST['product_id'])) {
 
             if (!$found) {
                 $_SESSION['cart'][] = [
-                    'id'    => $p['id'],
-                    'name'  => $p['name'],
-                    'price' => $p['price'],
-                    'qty'   => $qty,
-                    'total' => $p['price'] * $qty
+                    'id'=>$p['id'],
+                    'name'=>$p['name'],
+                    'price'=>$p['price'],
+                    'qty'=>$qty,
+                    'total'=>$p['price']*$qty
                 ];
             }
 
@@ -59,15 +58,8 @@ if (isset($_POST['product_id'])) {
     }
 }
 
-/* ================= CLEAR CART ================= */
 if (isset($_POST['clear'])) {
     $_SESSION['cart'] = [];
-}
-
-/* ================= CHECKOUT ================= */
-if (isset($_POST['checkout'])) {
-    header("Location: invoices.php");
-    exit;
 }
 
 $cart = $_SESSION['cart'];
@@ -88,7 +80,7 @@ body { font-family: Arial; }
     width:150px;
     text-align:center;
 }
-table { border-collapse: collapse; width:60%; }
+table { border-collapse: collapse; width:70%; }
 table, th, td { border:1px solid #000; }
 th, td { padding:8px; text-align:center; }
 button { padding:5px 10px; margin-top:5px; }
@@ -151,9 +143,10 @@ $grand += $item['total'];
 
 <br>
 
-<form method="post" style="display:inline;">
-    <button type="submit" name="checkout">Checkout</button>
-</form>
+<!-- CHECKOUT BUTTON (LINK METHOD) -->
+<a href="invoices.php">
+    <button type="button">Checkout</button>
+</a>
 
 <form method="post" style="display:inline;">
     <button type="submit" name="clear">Clear Cart</button>
