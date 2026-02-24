@@ -22,19 +22,25 @@ if (isset($_POST['login'])) {
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-<h2>Login</h2>
+<body class="login-body">
 
-<?php if($error) echo "<p style='color:red'>$error</p>"; ?>
+<div class="login-card">
+    <h2>Login</h2>
 
-<form method="post">
-<input type="text" name="username" required>
-<input type="password" name="password" required>
-<button name="login">Login</button>
-</form>
+    <?php if($error): ?>
+        <div class="error"><?php echo $error; ?></div>
+    <?php endif; ?>
+
+    <form method="post">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit" name="login">Login</button>
+    </form>
+</div>
 
 </body>
 </html>
