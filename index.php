@@ -7,12 +7,13 @@ if (!isLoggedIn()) {
     exit;
 }
 
+/* SAMPLE PRODUCTS WITH IMAGE */
 if (!isset($_SESSION['products'])) {
     $_SESSION['products'] = [
-        ['id'=>1,'name'=>'Tea','price'=>2.50],
-        ['id'=>2,'name'=>'Coffee','price'=>3.50],
-        ['id'=>3,'name'=>'Coca Cola','price'=>1.50],
-        ['id'=>4,'name'=>'Cake','price'=>5.00]
+        ['id'=>1,'name'=>'Tea','price'=>2.50,'image'=>'images/tea.jpg'],
+        ['id'=>2,'name'=>'Coffee','price'=>3.50,'image'=>'images/coffee.jpg'],
+        ['id'=>3,'name'=>'Coca Cola','price'=>1.50,'image'=>'images/coke.jpg'],
+        ['id'=>4,'name'=>'Cake','price'=>5.00,'image'=>'images/cake.jpg']
     ];
 }
 
@@ -22,6 +23,7 @@ if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
+/* ADD TO CART */
 if (isset($_POST['product_id'])) {
 
     $id  = (int)$_POST['product_id'];
@@ -56,11 +58,13 @@ if (isset($_POST['product_id'])) {
     }
 }
 
+/* CLEAR CART */
 if (isset($_POST['clear'])) {
     $_SESSION['cart'] = [];
 }
 
 $cart = $_SESSION['cart'];
+
 $grand = 0;
 foreach($cart as $item){
     $grand += $item['total'];
@@ -89,14 +93,14 @@ foreach($cart as $item){
 
 <div class="pos-container">
 
-    <!-- LEFT SIDE ORDER -->
+    <!-- LEFT ORDER PANEL -->
     <div class="order-panel">
         <h3>Order</h3>
 
         <?php if($cart): ?>
             <?php foreach($cart as $item): ?>
                 <div class="order-item">
-                    <?= $item['name'] ?>
+                    <?= htmlspecialchars($item['name']) ?>
                     <span>$<?= number_format($item['total'],2) ?></span>
                 </div>
             <?php endforeach; ?>
@@ -109,26 +113,38 @@ foreach($cart as $item){
         <div class="payment-buttons">
             <button class="cash">Cash</button>
             <button class="card">Card</button>
+
             <a href="invoices.php" target="_blank">
-                <button class="print">Print</button>
+                <button type="button" class="print">Print</button>
             </a>
+
             <form method="post">
                 <button name="clear" class="clear">Clear</button>
             </form>
         </div>
     </div>
 
-    <!-- RIGHT SIDE PRODUCTS -->
+    <!-- RIGHT PRODUCT PANEL -->
     <div class="product-panel">
         <?php foreach($products as $p): ?>
         <div class="product-card">
+            
+            <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>">
+
+            <div class="product-info">
+                <strong><?= htmlspecialchars($p['name']) ?></strong>
+                <span>$<?= number_format($p['price'],2) ?></span>
+            </div>
+
             <form method="post">
-                <strong><?= $p['name'] ?></strong>
-                <div>$<?= number_format($p['price'],2) ?></div>
                 <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
-                <input type="number" name="quantity" value="1" min="1">
-                <button>Add</button>
+
+                <div class="qty-row">
+                    <input type="number" name="quantity" value="1" min="1">
+                    <button type="submit">Add</button>
+                </div>
             </form>
+
         </div>
         <?php endforeach; ?>
     </div>
