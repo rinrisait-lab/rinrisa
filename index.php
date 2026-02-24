@@ -71,8 +71,13 @@ $cart = $_SESSION['cart'];
 <head>
 <meta charset="UTF-8">
 <title>BUTHMAIYA MART POS</title>
+
+<!-- ✅ Link External CSS -->
+<link rel="stylesheet" href="style.css">
+
 <style>
 body { font-family: Arial; }
+
 .product-box {
     display:inline-block;
     border:1px solid #ccc;
@@ -81,10 +86,27 @@ body { font-family: Arial; }
     width:150px;
     text-align:center;
 }
-table { border-collapse: collapse; width:70%; }
-table, th, td { border:1px solid #000; }
-th, td { padding:8px; text-align:center; }
-button { padding:6px 12px; margin-top:5px; cursor:pointer; }
+
+table { 
+    border-collapse: collapse; 
+    width:70%; 
+    margin: auto;
+}
+
+table, th, td { 
+    border:1px solid #000; 
+}
+
+th, td { 
+    padding:8px; 
+    text-align:center; 
+}
+
+button { 
+    padding:6px 12px; 
+    margin-top:5px; 
+    cursor:pointer; 
+}
 </style>
 </head>
 <body>
@@ -94,7 +116,7 @@ button { padding:6px 12px; margin-top:5px; cursor:pointer; }
     <a href="logout.php" class="logout-btn">Logout</a>
 </div>
 
-<h3>Products</h3>
+<h3 style="text-align:center;">Products</h3>
 
 <?php foreach($products as $p): ?>
 <div class="product-box">
@@ -111,7 +133,7 @@ button { padding:6px 12px; margin-top:5px; cursor:pointer; }
 <hr>
 
 <?php if($cart): ?>
-<h3>Cart</h3>
+<h3 style="text-align:center;">Cart</h3>
 
 <table>
 <tr>
@@ -144,14 +166,15 @@ $grand += $item['total'];
 
 <br>
 
-<!-- ✅ CHECKOUT OPEN NEW TAB -->
-<a href="invoices.php" target="_blank">
-    <button type="button">Receipt print</button>
-</a>
+<div style="text-align:center;">
+    <a href="invoices.php" target="_blank">
+        <button type="button">Receipt Print</button>
+    </a>
 
-<form method="post" style="display:inline;">
-    <button type="submit" name="clear">Clear Cart</button>
-</form>
+    <form method="post" style="display:inline;">
+        <button type="submit" name="clear">Clear Cart</button>
+    </form>
+</div>
 
 <?php endif; ?>
 
