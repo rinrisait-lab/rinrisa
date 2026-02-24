@@ -14,6 +14,7 @@ if (empty($cart)) {
     exit;
 }
 
+/* CALCULATE TOTAL */
 $grand = 0;
 foreach ($cart as $item) {
     $grand += $item['total'];
@@ -24,20 +25,21 @@ foreach ($cart as $item) {
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Receipt</title>
+<title>BUTHMAIYA MART Receipt</title>
 
 <style>
 body {
-    font-family: monospace;
+    font-family: 'Courier New', monospace;
     background: #f5f5f5;
 }
 
 #receipt {
-    width: 320px;
+    width: 300px;
     margin: 30px auto;
     background: #fff;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    font-size: 14px;
 }
 
 .header {
@@ -45,27 +47,28 @@ body {
 }
 
 .store-name {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
 }
 
 .small {
-    font-size: 13px;
+    font-size: 12px;
 }
 
 hr {
     border: none;
     border-top: 1px dashed #000;
-    margin: 10px 0;
+    margin: 8px 0;
 }
 
 table {
     width: 100%;
-    font-size: 14px;
+    border-collapse: collapse;
 }
 
 td {
     padding: 4px 0;
+    vertical-align: top;
 }
 
 .right {
@@ -79,8 +82,8 @@ td {
 
 .footer {
     text-align: center;
-    margin-top: 10px;
     font-size: 13px;
+    margin-top: 10px;
 }
 
 button {
@@ -126,14 +129,17 @@ window.onload = function(){
 
 <hr>
 
+<!-- ✅ FIX ALIGNMENT TABLE -->
 <table>
 <?php foreach($cart as $item): ?>
 <tr>
-    <td colspan="2"><strong><?= htmlspecialchars($item['name']) ?></strong></td>
-</tr>
-<tr>
-    <td><?= $item['qty'] ?> x $<?= number_format($item['price'],2) ?></td>
-    <td class="right">$<?= number_format($item['total'],2) ?></td>
+    <td style="width:70%;">
+        <strong><?= htmlspecialchars($item['name']) ?></strong><br>
+        <?= $item['qty'] ?> x $<?= number_format($item['price'],2) ?>
+    </td>
+    <td class="right" style="width:30%;">
+        $<?= number_format($item['total'],2) ?>
+    </td>
 </tr>
 <?php endforeach; ?>
 </table>
