@@ -1,12 +1,14 @@
 <?php
+session_start();
 require 'functions.php';
 
+/* ================= LOGIN CHECK ================= */
 if (!isLoggedIn()) {
     header("Location: login.php");
     exit;
 }
 
-/* ====== SAMPLE PRODUCTS ====== */
+/* ================= SAMPLE PRODUCTS ================= */
 if (!isset($_SESSION['products'])) {
     $_SESSION['products'] = [
         ['id'=>1,'name'=>'Tea','price'=>2.50],
@@ -22,11 +24,11 @@ if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
-/* ====== ADD TO CART ====== */
+/* ================= ADD TO CART ================= */
 if (isset($_POST['product_id'])) {
 
-    $id = (int)$_POST['product_id'];
-    $qty = max(1,(int)$_POST['quantity']);
+    $id  = (int)$_POST['product_id'];
+    $qty = max(1, (int)$_POST['quantity']);
 
     foreach ($products as $p) {
         if ($p['id'] == $id) {
@@ -44,11 +46,11 @@ if (isset($_POST['product_id'])) {
 
             if (!$found) {
                 $_SESSION['cart'][] = [
-                    'id'=>$p['id'],
-                    'name'=>$p['name'],
-                    'price'=>$p['price'],
-                    'qty'=>$qty,
-                    'total'=>$p['price']*$qty
+                    'id'    => $p['id'],
+                    'name'  => $p['name'],
+                    'price' => $p['price'],
+                    'qty'   => $qty,
+                    'total' => $p['price'] * $qty
                 ];
             }
 
@@ -57,9 +59,15 @@ if (isset($_POST['product_id'])) {
     }
 }
 
-/* ====== CLEAR CART ====== */
+/* ================= CLEAR CART ================= */
 if (isset($_POST['clear'])) {
     $_SESSION['cart'] = [];
+}
+
+/* ================= CHECKOUT ================= */
+if (isset($_POST['checkout'])) {
+    header("Location: invoices.php");
+    exit;
 }
 
 $cart = $_SESSION['cart'];
@@ -69,8 +77,22 @@ $cart = $_SESSION['cart'];
 <html>
 <head>
 <meta charset="UTF-8">
-<title>POS buthmaiyamart</title>
-<link rel="stylesheet" href="style.css">
+<title>BUTHMAIYA MART POS</title>
+<style>
+body { font-family: Arial; }
+.product-box {
+    display:inline-block;
+    border:1px solid #ccc;
+    padding:10px;
+    margin:10px;
+    width:150px;
+    text-align:center;
+}
+table { border-collapse: collapse; width:60%; }
+table, th, td { border:1px solid #000; }
+th, td { padding:8px; text-align:center; }
+button { padding:5px 10px; margin-top:5px; }
+</style>
 </head>
 <body>
 
@@ -82,24 +104,28 @@ $cart = $_SESSION['cart'];
 <h3>Products</h3>
 
 <?php foreach($products as $p): ?>
-<form method="post" style="display:inline-block;margin:10px;">
-<strong><?= htmlspecialchars($p['name']) ?></strong><br>
-$<?= number_format($p['price'],2) ?><br>
-<input type="hidden" name="product_id" value="<?= $p['id'] ?>">
-<input type="number" name="quantity" value="1" min="1">
-<button type="submit">Add</button>
-</form>
+<div class="product-box">
+    <form method="post">
+        <strong><?= htmlspecialchars($p['name']) ?></strong><br>
+        $<?= number_format($p['price'],2) ?><br><br>
+        <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
+        <input type="number" name="quantity" value="1" min="1" style="width:60px;"><br>
+        <button type="submit">Add</button>
+    </form>
+</div>
 <?php endforeach; ?>
 
 <hr>
 
 <?php if($cart): ?>
 <h3>Cart</h3>
-<table border="1" cellpadding="5">
+
+<table>
 <tr>
 <th>#</th>
 <th>Product</th>
 <th>Qty</th>
+<th>Price</th>
 <th>Total</th>
 </tr>
 
@@ -112,21 +138,26 @@ $grand += $item['total'];
 <td><?= $i+1 ?></td>
 <td><?= htmlspecialchars($item['name']) ?></td>
 <td><?= $item['qty'] ?></td>
+<td>$<?= number_format($item['price'],2) ?></td>
 <td>$<?= number_format($item['total'],2) ?></td>
 </tr>
 <?php endforeach; ?>
 
 <tr>
-<td colspan="3"><strong>Grand Total</strong></td>
+<td colspan="4"><strong>Grand Total</strong></td>
 <td><strong>$<?= number_format($grand,2) ?></strong></td>
 </tr>
 </table>
 
-<form method="post">
-<button type="submit" name="clear">Clear Cart</button>
+<br>
+
+<form method="post" style="display:inline;">
+    <button type="submit" name="checkout">Checkout</button>
 </form>
 
-<button onclick="window.print()">Print</button>
+<form method="post" style="display:inline;">
+    <button type="submit" name="clear">Clear Cart</button>
+</form>
 
 <?php endif; ?>
 
