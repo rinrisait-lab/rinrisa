@@ -1,20 +1,19 @@
 <?php
+session_start();
 require 'functions.php';
 
-if (isLoggedIn()) {
-    header("Location: index.php");
-    exit;
-}
+$error = "";
 
-$error = '';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-if (isset($_POST['login'])) {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
 
-    if (login($_POST['username'], $_POST['password'])) {
+    if (login($username, $password)) {
         header("Location: index.php");
         exit;
     } else {
-        $error = "Invalid username or password!";
+        $error = "Invalid username or password";
     }
 }
 ?>
@@ -22,24 +21,36 @@ if (isset($_POST['login'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Login - BUTHMAIYA MART</title>
+<link rel="stylesheet" href="style.css">
 </head>
+<body class="login-modern">
 
-<body class="login-body">
+<div class="login-container">
 
-<div class="login-card">
-    <h2>Login</h2>
+    <div class="login-left">
+        <h1>BUTHMAIYA MART</h1>
+        <p>POS & Inventory Management System</p>
+    </div>
 
-    <?php if($error): ?>
-        <div class="error"><?php echo $error; ?></div>
-    <?php endif; ?>
+    <div class="login-card-modern">
 
-    <form method="post">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit" name="login">Login</button>
-    </form>
+        <h2>Login</h2>
+
+        <?php if($error): ?>
+            <div class="error"><?= $error ?></div>
+        <?php endif; ?>
+
+        <form method="post">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+
+            <button type="submit">Log In</button>
+        </form>
+
+    </div>
+
 </div>
 
 </body>
