@@ -10,7 +10,7 @@ if (!isLoggedIn()) {
 $cart = $_SESSION['cart'] ?? [];
 
 if (empty($cart)) {
-    header("Location: index.php");
+    echo "No items in cart.";
     exit;
 }
 
@@ -40,7 +40,7 @@ hr { border-top:1px dashed #000; }
 <script>
 window.onload = function(){
     window.print();
-}
+};
 </script>
 
 </head>
@@ -79,7 +79,6 @@ Thank You ❤️
 <br>
 <div class="center">
 <button onclick="window.print()">Print Again</button>
-<a href="index.php">Back to POS</a>
 </div>
 
 </body>
