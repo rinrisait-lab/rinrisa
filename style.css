@@ -1,8 +1,22 @@
-/* ===== Modern Login Page ===== */
+/* ============================= */
+/* ===== GLOBAL RESET ===== */
+/* ============================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* ============================= */
+/* ===== MODERN LOGIN PAGE ===== */
+/* ============================= */
 
 .login-modern {
-    margin: 0;
-    font-family: Arial, sans-serif;
     height: 100vh;
     background: linear-gradient(135deg, #eef2f7, #dbe7f3);
     display: flex;
@@ -19,6 +33,7 @@
     box-shadow: 0 25px 60px rgba(0,0,0,0.1);
 }
 
+/* LEFT SIDE */
 .login-left {
     flex: 1;
     background: linear-gradient(135deg, #4a90e2, #357abd);
@@ -39,6 +54,7 @@
     opacity: 0.9;
 }
 
+/* RIGHT SIDE */
 .login-card-modern {
     flex: 1;
     padding: 60px;
@@ -48,14 +64,14 @@
 }
 
 .login-card-modern h2 {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-size: 28px;
 }
 
 .login-card-modern input {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
+    padding: 14px;
+    margin-bottom: 18px;
     border-radius: 10px;
     border: 1px solid #ccc;
     font-size: 14px;
@@ -69,13 +85,14 @@
 }
 
 .login-card-modern button {
-    padding: 12px;
+    padding: 14px;
     border-radius: 10px;
     border: none;
     background: linear-gradient(135deg, #4a90e2, #357abd);
     color: white;
     font-weight: bold;
     cursor: pointer;
+    font-size: 15px;
     transition: 0.2s;
 }
 
@@ -86,8 +103,8 @@
 .error {
     background: #ffe5e5;
     color: #b30000;
-    padding: 8px;
+    padding: 10px;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     font-size: 14px;
 }
