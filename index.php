@@ -69,7 +69,7 @@ $cart = $_SESSION['cart'];
 <html>
 <head>
 <meta charset="UTF-8">
-<title>POS System</title>
+<title>POS buthmaiyamart</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
