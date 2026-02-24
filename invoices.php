@@ -33,14 +33,14 @@ body {
     background: #f5f5f5;
 }
 
-/* ===== Screen View ===== */
+/* ===== SCREEN VIEW ===== */
 #receipt {
-    width: 420px;
-    margin: 30px auto;
+    width: 500px;
+    margin: 40px auto;
     background: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    font-size: 14px;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    font-size: 16px;
 }
 
 .header {
@@ -48,27 +48,28 @@ body {
 }
 
 .store-name {
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
 }
 
 .small {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 hr {
     border: none;
     border-top: 1px dashed #000;
-    margin: 8px 0;
+    margin: 12px 0;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 16px;
 }
 
 td {
-    padding: 4px 0;
+    padding: 6px 0;
     vertical-align: top;
 }
 
@@ -77,19 +78,19 @@ td {
 }
 
 .total-box {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
 }
 
 .footer {
     text-align: center;
-    font-size: 13px;
-    margin-top: 10px;
+    font-size: 14px;
+    margin-top: 15px;
 }
 
-/* ===== PRINT FIX ===== */
+/* ===== PRINT FIX (A4) ===== */
 @page {
-    margin: 0;
+    margin: 15mm;
 }
 
 @media print {
@@ -100,17 +101,10 @@ td {
     }
 
     #receipt {
-        width: 80mm;   /* Thermal width */
+        width: 150mm;   /* Perfect A4 centered */
         margin: 0 auto;
         box-shadow: none;
-    }
-
-    table {
-        width: 100%;
-    }
-
-    td {
-        word-break: break-word;
+        font-size: 16px;
     }
 
     button {
