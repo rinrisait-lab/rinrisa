@@ -62,3 +62,21 @@
     margin-bottom: 10px;
     font-size: 14px;
 }
+/* ===== Index Page Header ===== */
+
+.top-center {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.logout-btn {
+    display: inline-block;
+    margin-top: 6px;
+    color: #c0392b;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.logout-btn:hover {
+    text-decoration: underline;
+}
