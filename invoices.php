@@ -14,7 +14,7 @@ if (empty($cart)) {
     exit;
 }
 
-/* CALCULATE TOTAL */
+/* Calculate total */
 $grand = 0;
 foreach ($cart as $item) {
     $grand += $item['total'];
@@ -33,8 +33,9 @@ body {
     background: #f5f5f5;
 }
 
+/* ===== Screen View ===== */
 #receipt {
-    width: 300px;
+    width: 320px;
     margin: 30px auto;
     background: #fff;
     padding: 20px;
@@ -86,21 +87,32 @@ td {
     margin-top: 10px;
 }
 
-button {
-    padding: 6px 12px;
-    margin-top: 10px;
-    cursor: pointer;
+/* ===== PRINT FIX ===== */
+@page {
+    margin: 0;
 }
 
 @media print {
+
     body {
         background: #fff;
-    }
-    #receipt {
-        box-shadow: none;
         margin: 0;
+    }
+
+    #receipt {
+        width: 80mm;   /* Thermal width */
+        margin: 0 auto;
+        box-shadow: none;
+    }
+
+    table {
         width: 100%;
     }
+
+    td {
+        word-break: break-word;
+    }
+
     button {
         display: none;
     }
@@ -129,7 +141,6 @@ window.onload = function(){
 
 <hr>
 
-<!-- ✅ FIX ALIGNMENT TABLE -->
 <table>
 <?php foreach($cart as $item): ?>
 <tr>
