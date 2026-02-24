@@ -35,7 +35,7 @@ body {
 
 /* ===== Screen View ===== */
 #receipt {
-    width: 320px;
+    width: 420px;
     margin: 30px auto;
     background: #fff;
     padding: 20px;
