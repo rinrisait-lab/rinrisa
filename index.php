@@ -89,10 +89,10 @@ button { padding:6px 12px; margin-top:5px; cursor:pointer; }
 </head>
 <body>
 
-<h2>Welcome <?= htmlspecialchars($_SESSION['user']) ?></h2>
-<a href="logout.php">Logout</a>
-
-<hr>
+<div class="top-center">
+    <h2>Welcome <?= htmlspecialchars($_SESSION['user']) ?></h2>
+    <a href="logout.php" class="logout-btn">Logout</a>
+</div>
 
 <h3>Products</h3>
 
