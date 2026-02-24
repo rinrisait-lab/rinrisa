@@ -15,6 +15,7 @@ body {
 
 .top-center h2 {
     margin: 0;
+    font-size: 26px;
 }
 
 .logout-btn {
@@ -27,12 +28,19 @@ body {
     text-decoration: none;
     font-size: 13px;
     font-weight: bold;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background: #e2e6ff;
 }
 
 /* ===== Section Title ===== */
 h3 {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 40px;
+    font-size: 22px;
+    font-weight: 600;
 }
 
 /* ===== Products Grid ===== */
@@ -60,27 +68,45 @@ h3 {
 
 .product-box strong {
     font-size: 18px;
+    display: block;
+    margin-bottom: 5px;
 }
 
 .product-box input {
     width: 70px;
-    padding: 5px;
+    padding: 6px;
     margin-top: 10px;
     border-radius: 6px;
     border: 1px solid #ccc;
+    text-align: center;
 }
 
 .product-box button {
     margin-top: 10px;
-    padding: 6px 12px;
+    padding: 8px 14px;
     border-radius: 6px;
     border: none;
     background: #4e73df;
     color: white;
     cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
 }
 
-/* ===== Cart ===== */
+.product-box button:hover {
+    background: #224abe;
+}
+
+/* ===== Divider ===== */
+hr {
+    width: 80%;
+    margin: 40px auto;
+    border: none;
+    height: 1px;
+    background: #ddd;
+}
+
+/* ===== Cart Table ===== */
 table {
     width: 80%;
     margin: 30px auto;
@@ -113,12 +139,13 @@ tr:nth-child(even) {
 }
 
 .actions button {
-    padding: 8px 18px;
+    padding: 10px 20px;
     border-radius: 8px;
     border: none;
     cursor: pointer;
     font-weight: 600;
     margin: 5px;
+    transition: 0.3s;
 }
 
 .print-btn {
@@ -126,7 +153,15 @@ tr:nth-child(even) {
     color: white;
 }
 
+.print-btn:hover {
+    background: #17a673;
+}
+
 .clear-btn {
     background: #e74a3b;
     color: white;
+}
+
+.clear-btn:hover {
+    background: #c0392b;
 }
