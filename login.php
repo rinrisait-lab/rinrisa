@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <title>Login - BUTHMAIYA MART</title>
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="login-modern">
 
 <div class="login-container">
