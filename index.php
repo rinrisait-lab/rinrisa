@@ -74,11 +74,12 @@ foreach($cart as $item){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Premium POS</title>
+<title>Buthmaiya Premium POS</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- NAVBAR -->
 <nav class="navbar">
     <div class="nav-left">
         <div class="logo">Buthmaiya POS</div>
@@ -96,6 +97,7 @@ foreach($cart as $item){
 
 <div class="pos-container">
 
+    <!-- ORDER PANEL -->
     <div class="order-panel">
         <h3>Order Summary</h3>
 
@@ -126,14 +128,17 @@ foreach($cart as $item){
         </div>
     </div>
 
+    <!-- PRODUCTS -->
     <div class="product-panel">
         <?php foreach($products as $p): ?>
         <div class="product-card">
             <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>">
+
             <div class="product-info">
                 <strong><?= htmlspecialchars($p['name']) ?></strong>
                 <span>$<?= number_format($p['price'],2) ?></span>
             </div>
+
             <form method="post">
                 <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
                 <div class="qty-row">
