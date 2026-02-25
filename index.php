@@ -7,7 +7,7 @@ if (!isLoggedIn()) {
     exit;
 }
 
-/* PRODUCTS WITH IMAGE */
+/* PRODUCTS */
 if (!isset($_SESSION['products'])) {
     $_SESSION['products'] = [
         ['id'=>1,'name'=>'Tea','price'=>2.50,'image'=>'images/tea.jpg'],
@@ -64,7 +64,6 @@ if (isset($_POST['clear'])) {
 }
 
 $cart = $_SESSION['cart'];
-
 $grand = 0;
 foreach($cart as $item){
     $grand += $item['total'];
@@ -75,19 +74,18 @@ foreach($cart as $item){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Premium POS Dashboard</title>
+<title>Premium POS</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- PREMIUM NAVBAR -->
 <nav class="navbar">
     <div class="nav-left">
-        <a href="#" class="logo">Buthmaiya POS</a>
-        <a href="#" class="nav-link active">Home</a>
-        <a href="#" class="nav-link">Orders</a>
-        <a href="#" class="nav-link">Reports</a>
-        <a href="#" class="nav-link">Settings</a>
+        <div class="logo">Buthmaiya POS</div>
+        <a class="nav-link active">Home</a>
+        <a class="nav-link">Orders</a>
+        <a class="nav-link">Reports</a>
+        <a class="nav-link">Settings</a>
     </div>
 
     <div class="nav-right">
@@ -98,9 +96,8 @@ foreach($cart as $item){
 
 <div class="pos-container">
 
-    <!-- ORDER PANEL -->
     <div class="order-panel">
-        <h3>Order</h3>
+        <h3>Order Summary</h3>
 
         <?php if($cart): ?>
             <?php foreach($cart as $item): ?>
@@ -129,27 +126,21 @@ foreach($cart as $item){
         </div>
     </div>
 
-    <!-- PRODUCT PANEL -->
     <div class="product-panel">
         <?php foreach($products as $p): ?>
         <div class="product-card">
-            
             <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>">
-
             <div class="product-info">
                 <strong><?= htmlspecialchars($p['name']) ?></strong>
                 <span>$<?= number_format($p['price'],2) ?></span>
             </div>
-
             <form method="post">
                 <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
-
                 <div class="qty-row">
                     <input type="number" name="quantity" value="1" min="1">
-                    <button type="submit">Add</button>
+                    <button>Add</button>
                 </div>
             </form>
-
         </div>
         <?php endforeach; ?>
     </div>
