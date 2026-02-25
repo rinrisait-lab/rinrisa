@@ -1,4 +1,4 @@
-/* ===== GLOBAL ===== */
+/* RESET */
 * {
     margin: 0;
     padding: 0;
@@ -7,58 +7,57 @@
 
 body {
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    background: #47A7CE; /* Ocean Blue */
     min-height: 100vh;
-    color: #fff;
+    color: #1f2937;
 }
 
-/* ===== TOP NAVBAR ===== */
+/* TOP NAVBAR */
 .top-menu {
+    background: #ffffff;
+    padding: 18px 40px;
     display: flex;
     align-items: center;
-    padding: 20px 40px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    gap: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    font-weight: 500;
 }
 
+.top-menu a,
 .top-menu div {
-    margin-right: 30px;
     cursor: pointer;
-    font-weight: 500;
+    color: #374151;
     transition: 0.3s;
 }
 
 .top-menu div:hover {
-    color: #38ef7d;
+    color: #2563eb;
 }
 
 .top-menu a {
-    color: #ff6b6b;
     text-decoration: none;
-    font-weight: 600;
+    color: #ef4444;
+    margin-left: 10px;
 }
 
-/* ===== MAIN LAYOUT ===== */
+/* MAIN LAYOUT */
 .pos-container {
     display: flex;
-    padding: 40px;
     gap: 30px;
+    padding: 40px;
 }
 
-/* ===== ORDER PANEL ===== */
+/* ORDER PANEL */
 .order-panel {
-    width: 320px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(20px);
+    width: 300px;
+    background: #ffffff;
     padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
 }
 
 .order-panel h3 {
     margin-bottom: 20px;
-    font-size: 20px;
 }
 
 .order-item {
@@ -69,12 +68,12 @@ body {
 }
 
 .order-total {
-    margin-top: 20px;
-    font-size: 18px;
+    margin-top: 15px;
     font-weight: bold;
+    font-size: 18px;
 }
 
-/* ===== BUTTONS ===== */
+/* PAYMENT BUTTONS */
 .payment-buttons {
     margin-top: 20px;
     display: flex;
@@ -82,70 +81,66 @@ body {
     gap: 12px;
 }
 
-button {
+.payment-buttons button {
     padding: 12px;
+    border-radius: 8px;
     border: none;
-    border-radius: 12px;
-    font-weight: 600;
     cursor: pointer;
+    font-weight: 600;
+    color: #fff;
     transition: 0.3s;
 }
 
 .cash {
-    background: linear-gradient(90deg, #4facfe, #00f2fe);
-    color: #fff;
+    background: #3b82f6;
 }
 
 .card {
-    background: linear-gradient(90deg, #43e97b, #38f9d7);
-    color: #fff;
+    background: #22c55e;
 }
 
 .print {
-    background: linear-gradient(90deg, #f7971e, #ffd200);
-    color: #fff;
+    background: #f59e0b;
 }
 
 .clear {
-    background: linear-gradient(90deg, #ff416c, #ff4b2b);
-    color: #fff;
+    background: #ef4444;
 }
 
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+.payment-buttons button:hover {
+    opacity: 0.85;
 }
 
-/* ===== PRODUCT PANEL ===== */
+/* PRODUCT PANEL */
 .product-panel {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 30px;
 }
 
-/* ===== PRODUCT CARD ===== */
+/* PRODUCT CARD */
 .product-card {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(20px);
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
     transition: 0.3s;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
 }
 
 .product-card img {
     width: 100%;
-    height: 170px;
+    height: 160px;
     object-fit: cover;
-    border-radius: 15px;
+    border-radius: 12px;
     margin-bottom: 15px;
 }
 
+/* PRODUCT INFO */
 .product-info {
     display: flex;
     justify-content: space-between;
@@ -153,6 +148,7 @@ button:hover {
     font-weight: 600;
 }
 
+/* QTY + ADD */
 .qty-row {
     display: flex;
     gap: 10px;
@@ -161,24 +157,21 @@ button:hover {
 .qty-row input {
     width: 60px;
     padding: 6px;
-    border-radius: 8px;
-    border: none;
-    text-align: center;
+    border-radius: 6px;
+    border: 1px solid #ccc;
 }
 
 .qty-row button {
     flex: 1;
-    background: linear-gradient(90deg, #4facfe, #00f2fe);
-    color: #fff;
+    background: #3b82f6;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-    .pos-container {
-        flex-direction: column;
-    }
-
-    .order-panel {
-        width: 100%;
-    }
+.qty-row button:hover {
+    background: #2563eb;
 }
