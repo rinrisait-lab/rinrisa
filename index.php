@@ -7,9 +7,7 @@ if (!isLoggedIn()) {
     exit;
 }
 
-/* ===============================
-   SAMPLE PRODUCTS WITH IMAGE
-================================= */
+/* PRODUCTS WITH IMAGE */
 if (!isset($_SESSION['products'])) {
     $_SESSION['products'] = [
         ['id'=>1,'name'=>'Tea','price'=>2.50,'image'=>'images/tea.jpg'],
@@ -25,9 +23,7 @@ if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
-/* ===============================
-   ADD TO CART
-================================= */
+/* ADD TO CART */
 if (isset($_POST['product_id'])) {
 
     $id  = (int)$_POST['product_id'];
@@ -62,18 +58,13 @@ if (isset($_POST['product_id'])) {
     }
 }
 
-/* ===============================
-   CLEAR CART
-================================= */
+/* CLEAR CART */
 if (isset($_POST['clear'])) {
     $_SESSION['cart'] = [];
 }
 
 $cart = $_SESSION['cart'];
 
-/* ===============================
-   CALCULATE TOTAL
-================================= */
 $grand = 0;
 foreach($cart as $item){
     $grand += $item['total'];
@@ -84,52 +75,41 @@ foreach($cart as $item){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>POS Dashboard</title>
+<title>Premium POS Dashboard</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ===============================
-     TOP MENU
-================================= -->
-<div class="top-menu">
-    <div class="menu-left">
-        <div>Home</div>
-        <div>Orders</div>
-        <div>Reports</div>
-        <div>Settings</div>
+<!-- PREMIUM NAVBAR -->
+<nav class="navbar">
+    <div class="nav-left">
+        <a href="#" class="logo">Buthmaiya POS</a>
+        <a href="#" class="nav-link active">Home</a>
+        <a href="#" class="nav-link">Orders</a>
+        <a href="#" class="nav-link">Reports</a>
+        <a href="#" class="nav-link">Settings</a>
     </div>
-    <div class="menu-right">
-        <?= htmlspecialchars($_SESSION['user']) ?>
-        <a href="logout.php">Logout</a>
+
+    <div class="nav-right">
+        <span class="user"><?= htmlspecialchars($_SESSION['user']) ?></span>
+        <a href="logout.php" class="logout-btn">Logout</a>
     </div>
-</div>
+</nav>
 
 <div class="pos-container">
 
-    <!-- ===============================
-         LEFT ORDER PANEL
-    ================================= -->
+    <!-- ORDER PANEL -->
     <div class="order-panel">
         <h3>Order</h3>
 
-        <div class="order-list">
-            <?php if($cart): ?>
-                <?php foreach($cart as $item): ?>
-                    <div class="order-item">
-                        <span>
-                            <?= htmlspecialchars($item['name']) ?> 
-                            (x<?= $item['qty'] ?>)
-                        </span>
-                        <span>
-                            $<?= number_format($item['total'],2) ?>
-                        </span>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p class="empty">No items yet</p>
-            <?php endif; ?>
-        </div>
+        <?php if($cart): ?>
+            <?php foreach($cart as $item): ?>
+                <div class="order-item">
+                    <?= htmlspecialchars($item['name']) ?> (x<?= $item['qty'] ?>)
+                    <span>$<?= number_format($item['total'],2) ?></span>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
 
         <div class="order-total">
             Total: $<?= number_format($grand,2) ?>
@@ -149,16 +129,12 @@ foreach($cart as $item){
         </div>
     </div>
 
-    <!-- ===============================
-         RIGHT PRODUCT PANEL
-    ================================= -->
+    <!-- PRODUCT PANEL -->
     <div class="product-panel">
         <?php foreach($products as $p): ?>
         <div class="product-card">
             
-            <img src="<?= htmlspecialchars($p['image']) ?>" 
-                 alt="<?= htmlspecialchars($p['name']) ?>" 
-                 class="product-img">
+            <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>">
 
             <div class="product-info">
                 <strong><?= htmlspecialchars($p['name']) ?></strong>
