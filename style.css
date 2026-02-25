@@ -1,145 +1,305 @@
+/* ============================= */
+/* GLOBAL */
+/* ============================= */
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    margin:0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #47A7CE, #2E8BC0);
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #47A7CE;
+    color: #1e293b;
 }
 
+/* ============================= */
 /* NAVBAR */
-.navbar {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 40px;
-    background:white;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
+/* ============================= */
 
-.logo {
-    font-size:20px;
-    font-weight:700;
-    color:#2E8BC0;
-    margin-right:25px;
+.navbar {
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
 .nav-left {
-    display:flex;
-    align-items:center;
-    gap:20px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 20px;
+    margin-right: 30px;
+    color: #0f172a;
 }
 
 .nav-link {
-    color:#555;
-    text-decoration:none;
-    font-weight:500;
-    cursor:pointer;
+    text-decoration: none;
+    margin-right: 20px;
+    color: #475569;
+    font-weight: 500;
+    transition: 0.3s;
 }
 
-.nav-link.active,
 .nav-link:hover {
-    color:#2E8BC0;
+    color: #2563eb;
+}
+
+.nav-link.active {
+    color: #2563eb;
 }
 
 .nav-right {
-    display:flex;
-    align-items:center;
-    gap:15px;
+    display: flex;
+    align-items: center;
+}
+
+.user {
+    margin-right: 15px;
+    font-weight: 500;
 }
 
 .logout-btn {
-    background:#e74c3c;
-    color:white;
-    padding:6px 14px;
-    border-radius:6px;
-    text-decoration:none;
+    background: #ef4444;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
 }
 
-/* LAYOUT */
-.pos-container {
-    display:flex;
-    gap:30px;
-    padding:40px;
+.logout-btn:hover {
+    background: #dc2626;
 }
+
+/* ============================= */
+/* DASHBOARD */
+/* ============================= */
+
+.dashboard-container {
+    padding: 60px 80px;
+}
+
+.welcome-box {
+    background: white;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+}
+
+.start-btn {
+    display: inline-block;
+    margin-top: 20px;
+    background: #2563eb;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.start-btn:hover {
+    background: #1d4ed8;
+}
+
+.dashboard-cards {
+    display: flex;
+    gap: 30px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    width: 250px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    margin: 0 0 10px 0;
+}
+
+.card p {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* ============================= */
+/* POS / ORDERS PAGE */
+/* ============================= */
+
+.pos-container {
+    display: flex;
+    gap: 30px;
+    padding: 50px 60px;
+}
+
+/* LEFT ORDER PANEL */
 
 .order-panel {
-    width:280px;
-    background:white;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+    background: white;
+    width: 320px;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.order-panel h3 {
+    margin-top: 0;
 }
 
 .order-item {
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:8px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
 }
 
 .order-total {
-    font-weight:bold;
-    margin-top:15px;
-    margin-bottom:15px;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* BUTTONS */
+
+.payment-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .payment-buttons button {
-    width:100%;
-    padding:10px;
-    margin-bottom:10px;
-    border:none;
-    border-radius:8px;
-    color:white;
-    font-weight:600;
-    cursor:pointer;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.cash { background:#3b82f6; }
-.card { background:#22c55e; }
-.print { background:#f59e0b; }
-.clear { background:#ef4444; }
+.cash {
+    background: #3b82f6;
+    color: white;
+}
 
-/* PRODUCTS */
+.cash:hover {
+    background: #2563eb;
+}
+
+.card {
+    background: #22c55e;
+    color: white;
+}
+
+.card:hover {
+    background: #16a34a;
+}
+
+.print {
+    background: #f59e0b;
+    color: white;
+}
+
+.print:hover {
+    background: #d97706;
+}
+
+.clear {
+    background: #ef4444;
+    color: white;
+}
+
+.clear:hover {
+    background: #dc2626;
+}
+
+/* RIGHT PRODUCT PANEL */
+
 .product-panel {
-    flex:1;
-    display:flex;
-    gap:25px;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
 }
+
+/* PRODUCT CARD */
 
 .product-card {
-    background:white;
-    width:240px;
-    padding:15px;
-    border-radius:15px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+    background: white;
+    width: 250px;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
 }
 
 .product-card img {
-    width:100%;
-    height:150px;
-    object-fit:cover;
-    border-radius:10px;
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 14px;
 }
 
 .product-info {
-    display:flex;
-    justify-content:space-between;
-    margin:10px 0;
-    font-weight:600;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-weight: 600;
 }
 
 .qty-row {
-    display:flex;
-    gap:10px;
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
 }
 
 .qty-row input {
-    width:50px;
-    padding:5px;
+    width: 60px;
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
 }
 
 .qty-row button {
-    flex:1;
-    background:#3b82f6;
-    color:white;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
+    flex: 1;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.qty-row button:hover {
+    background: #1d4ed8;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 1000px) {
+    .pos-container {
+        flex-direction: column;
+    }
+
+    .product-panel {
+        justify-content: center;
+    }
+
+    .dashboard-cards {
+        flex-direction: column;
+    }
 }
