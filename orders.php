@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 require 'functions.php';
@@ -26,6 +25,7 @@ if (!isset($_SESSION['cart'])) {
 
 /* ADD TO CART */
 if (isset($_POST['product_id'])) {
+
     $id  = (int)$_POST['product_id'];
     $qty = max(1, (int)$_POST['quantity']);
 
@@ -52,6 +52,7 @@ if (isset($_POST['product_id'])) {
                     'total'=>$p['price']*$qty
                 ];
             }
+
             break;
         }
     }
@@ -62,12 +63,41 @@ if (isset($_POST['clear'])) {
     $_SESSION['cart'] = [];
 }
 
+/* CALCULATE TOTAL */
 $cart = $_SESSION['cart'];
 $grand = 0;
 foreach($cart as $item){
     $grand += $item['total'];
 }
+
+/* PROCESS PAYMENT */
+if (isset($_POST['cash']) || isset($_POST['card'])) {
+
+    if (!empty($_SESSION['cart'])) {
+
+        $payment_type = isset($_POST['cash']) ? 'Cash' : 'Card';
+
+        $invoice = [
+            'date' => date("Y-m-d H:i:s"),
+            'items' => $_SESSION['cart'],
+            'total' => $grand,
+            'payment' => $payment_type
+        ];
+
+        if (!isset($_SESSION['invoices'])) {
+            $_SESSION['invoices'] = [];
+        }
+
+        $_SESSION['invoices'][] = $invoice;
+
+        $_SESSION['cart'] = [];
+
+        header("Location: invoices.php");
+        exit;
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,6 +124,7 @@ foreach($cart as $item){
 
 <div class="pos-container">
 
+    <!-- ORDER PANEL -->
     <div class="order-panel">
         <h3>Order Summary</h3>
 
@@ -111,16 +142,27 @@ foreach($cart as $item){
         </div>
 
         <div class="payment-buttons">
-            <button class="cash">Cash</button>
-            <button class="card">Card</button>
-            <button class="print">Print</button>
 
             <form method="post">
-                <button name="clear" class="clear">Clear</button>
+                <button type="submit" name="cash" class="cash">Cash</button>
             </form>
+
+            <form method="post">
+                <button type="submit" name="card" class="card">Card</button>
+            </form>
+
+            <a href="invoices.php" target="_blank">
+                <button type="button" class="print">Print</button>
+            </a>
+
+            <form method="post">
+                <button type="submit" name="clear" class="clear">Clear</button>
+            </form>
+
         </div>
     </div>
 
+    <!-- PRODUCT PANEL -->
     <div class="product-panel">
         <?php foreach($products as $p): ?>
         <div class="product-card">
