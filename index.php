@@ -7,7 +7,9 @@ if (!isLoggedIn()) {
     exit;
 }
 
-/* SAMPLE PRODUCTS WITH IMAGE */
+/* ===============================
+   SAMPLE PRODUCTS WITH IMAGE
+================================= */
 if (!isset($_SESSION['products'])) {
     $_SESSION['products'] = [
         ['id'=>1,'name'=>'Tea','price'=>2.50,'image'=>'images/tea.jpg'],
@@ -23,7 +25,9 @@ if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
-/* ADD TO CART */
+/* ===============================
+   ADD TO CART
+================================= */
 if (isset($_POST['product_id'])) {
 
     $id  = (int)$_POST['product_id'];
@@ -58,13 +62,18 @@ if (isset($_POST['product_id'])) {
     }
 }
 
-/* CLEAR CART */
+/* ===============================
+   CLEAR CART
+================================= */
 if (isset($_POST['clear'])) {
     $_SESSION['cart'] = [];
 }
 
 $cart = $_SESSION['cart'];
 
+/* ===============================
+   CALCULATE TOTAL
+================================= */
 $grand = 0;
 foreach($cart as $item){
     $grand += $item['total'];
@@ -80,12 +89,17 @@ foreach($cart as $item){
 </head>
 <body>
 
+<!-- ===============================
+     TOP MENU
+================================= -->
 <div class="top-menu">
-    <div>Home</div>
-    <div>Orders</div>
-    <div>Reports</div>
-    <div>Settings</div>
-    <div style="margin-left:auto;">
+    <div class="menu-left">
+        <div>Home</div>
+        <div>Orders</div>
+        <div>Reports</div>
+        <div>Settings</div>
+    </div>
+    <div class="menu-right">
         <?= htmlspecialchars($_SESSION['user']) ?>
         <a href="logout.php">Logout</a>
     </div>
@@ -93,18 +107,29 @@ foreach($cart as $item){
 
 <div class="pos-container">
 
-    <!-- LEFT ORDER PANEL -->
+    <!-- ===============================
+         LEFT ORDER PANEL
+    ================================= -->
     <div class="order-panel">
         <h3>Order</h3>
 
-        <?php if($cart): ?>
-            <?php foreach($cart as $item): ?>
-                <div class="order-item">
-                    <?= htmlspecialchars($item['name']) ?>
-                    <span>$<?= number_format($item['total'],2) ?></span>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
+        <div class="order-list">
+            <?php if($cart): ?>
+                <?php foreach($cart as $item): ?>
+                    <div class="order-item">
+                        <span>
+                            <?= htmlspecialchars($item['name']) ?> 
+                            (x<?= $item['qty'] ?>)
+                        </span>
+                        <span>
+                            $<?= number_format($item['total'],2) ?>
+                        </span>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p class="empty">No items yet</p>
+            <?php endif; ?>
+        </div>
 
         <div class="order-total">
             Total: $<?= number_format($grand,2) ?>
@@ -124,12 +149,16 @@ foreach($cart as $item){
         </div>
     </div>
 
-    <!-- RIGHT PRODUCT PANEL -->
+    <!-- ===============================
+         RIGHT PRODUCT PANEL
+    ================================= -->
     <div class="product-panel">
         <?php foreach($products as $p): ?>
         <div class="product-card">
             
-            <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>">
+            <img src="<?= htmlspecialchars($p['image']) ?>" 
+                 alt="<?= htmlspecialchars($p['name']) ?>" 
+                 class="product-img">
 
             <div class="product-info">
                 <strong><?= htmlspecialchars($p['name']) ?></strong>
