@@ -1,103 +1,148 @@
+/* ===== BODY BACKGROUND ===== */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg,#0f172a,#1e293b);
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
 }
 
-/* TOP MENU */
+/* ===== TOP NAVIGATION ===== */
 .top-menu {
-    background: #0f172a;
-    color: white;
-    padding: 15px 30px;
     display: flex;
-    gap: 30px;
     align-items: center;
+    padding: 18px 40px;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
+.top-menu div {
+    color: #ffffff;
+    margin-right: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* Hover underline animation */
+.top-menu div::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0%;
+    height: 2px;
+    background: #3b82f6;
+    transition: 0.3s;
+}
+
+.top-menu div:hover {
+    color: #3b82f6;
+}
+
+.top-menu div:hover::after {
+    width: 100%;
+}
+
+/* Logout style */
 .top-menu a {
-    color: #ef4444;
-    margin-left: 15px;
+    color: #ff4d4d;
     text-decoration: none;
+    font-weight: bold;
+    margin-left: 20px;
 }
 
-/* MAIN LAYOUT */
+.top-menu a:hover {
+    color: #ff1a1a;
+}
+
+/* ===== LAYOUT ===== */
 .pos-container {
     display: flex;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 70px);
 }
 
-/* LEFT PANEL */
+/* ===== ORDER PANEL ===== */
 .order-panel {
     width: 320px;
-    background: #f8fafc;
-    padding: 20px;
-    overflow-y: auto;
+    background: rgba(255,255,255,0.95);
+    padding: 25px;
+    border-radius: 0 20px 20px 0;
+    box-shadow: 5px 0 25px rgba(0,0,0,0.2);
 }
 
 .order-item {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    font-size: 15px;
 }
 
 .order-total {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
-    margin: 20px 0;
+    margin: 25px 0;
 }
 
-/* BUTTONS */
+/* ===== BUTTONS ===== */
 .payment-buttons button {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .cash { background: #3b82f6; color: white; }
 .card { background: #22c55e; color: white; }
-.print { background: orange; color: white; }
-.clear { background: red; color: white; }
+.print { background: #f59e0b; color: white; }
+.clear { background: #ef4444; color: white; }
 
-/* RIGHT PRODUCT GRID */
-.product-panel {
-    flex: 1;
-    padding: 30px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
-    gap: 25px;
+.payment-buttons button:hover {
+    transform: scale(1.05);
 }
 
-/* PRODUCT CARD */
+/* ===== PRODUCT GRID ===== */
+.product-panel {
+    flex: 1;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+    gap: 30px;
+}
+
+/* ===== PRODUCT CARD ===== */
 .product-card {
-    background: #1e222a;
-    border-radius: 15px;
-    padding: 15px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 18px;
+    padding: 18px;
     color: white;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-    transition: 0.3s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: 0.4s;
 }
 
 .product-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
 }
 
 .product-card img {
     width: 100%;
-    height: 160px;
+    height: 170px;
     object-fit: cover;
     border-radius: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .product-info {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
     font-weight: bold;
+    margin-bottom: 12px;
 }
 
 .qty-row {
@@ -117,7 +162,12 @@ body {
     background: #3b82f6;
     border: none;
     border-radius: 6px;
-    padding: 6px;
+    padding: 8px;
     color: white;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.qty-row button:hover {
+    background: #2563eb;
 }
